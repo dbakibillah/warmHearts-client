@@ -20,11 +20,7 @@ const SERVICES = [
 const NAV_LINKS = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
-    { name: "Forum", path: "/forum", authOnly: true },
-    { name: "Attorneys", path: "/attorneys" },
-    { name: "ADR/ODR", path: "/adr-odr" },
-    { name: "Blog", path: "/blog" },
-    { name: "Resources", path: "/resources" },
+    { name: "Community", path: "/community" },
 ];
 
 const NavItem = ({ children, to, className = "" }) => (

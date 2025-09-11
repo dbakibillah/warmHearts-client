@@ -1,4 +1,3 @@
-import React from 'react';
 import Banner from './components/Banner';
 import AboutUs from './components/AboutUs';
 import OfferNav from './components/OfferNav';
@@ -13,6 +12,7 @@ const Home = () => {
       <ClientReviews/>
     </div>
   );
+
 };
 
 export default Home;

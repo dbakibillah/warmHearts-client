@@ -222,7 +222,7 @@ const Navbar = () => {
 
     return (
         <section className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200 shadow-sm">
-            <div className="navbar container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="navbar container mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Logo & Mobile Menu */}
                 <div className="navbar-start">
                     {/* Mobile Hamburger Menu */}

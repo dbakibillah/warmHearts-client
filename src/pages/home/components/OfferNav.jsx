@@ -2,11 +2,11 @@
 import { motion } from "framer-motion";
 import {
     FaHeart,
-    FaUtensils,
-    FaMusic,
     FaHeartbeat,
     FaHome,
+    FaMusic,
     FaUsers,
+    FaUtensils,
 } from "react-icons/fa";
 
 const OfferNav = () => {

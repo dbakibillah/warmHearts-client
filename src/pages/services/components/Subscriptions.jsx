@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaCheckCircle, FaCrown, FaHeartbeat, FaHandsHelping } from "react-icons/fa";
+import { Link } from "react-router";
 
 const Subscription = () => {
   const plans = [
@@ -120,9 +121,9 @@ const Subscription = () => {
                 ))}
               </ul>
 
-              <button className="mt-8 w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white py-3 rounded-lg font-semibold shadow-md transition-all">
+              <Link to="/appointment" className="mt-8 w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white py-3 rounded-lg font-semibold shadow-md transition-all">
                 Select this Plan
-              </button>
+              </Link>
 
               {plan.title.includes("Premium") && (
                 <span className="absolute top-3 right-3 bg-yellow-400 text-xs font-bold px-3 py-1 rounded-full text-gray-900">

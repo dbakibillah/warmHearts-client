@@ -6,6 +6,8 @@ import Home from "./pages/home/Home";
 import AuthProvider from "./providers/AuthProviders";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Subscription from "./pages/services/components/Subscriptions";
+import AppointmentForm from "./pages/services/components/AppointmentForm";
+import Loading from "./common/loading/Loading";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +19,8 @@ createRoot(document.getElementById("root")).render(
                     <Route path="/" element={<Root />}>
                         <Route path="/" element={<Home />} />
                         <Route path="/subscription" element={<Subscription />} />
+                        <Route path="/appointment" element={<AppointmentForm />} />
+                        <Route path="/pethouse" element={<Loading />} />
                         {/* <Route path="/login" element={<Login />} /> */}
                     </Route>
                 </Routes>

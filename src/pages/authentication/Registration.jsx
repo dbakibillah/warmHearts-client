@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
@@ -133,10 +132,12 @@ const Registration = () => {
     };
 
     return (
-        <section className="px-4 py-16 flex items-center justify-center">
-            <Helmet>
-                <title>Registration | petVerse</title>
-            </Helmet>
+        <section className="px-4 py-16 flex items-center justify-center bg-gradient-to-br from-teal-50 to-blue-50 min-h-screen relative overflow-hidden">
+            
+            {/* Background decorative elements */}
+            <div className="absolute top-10 left-10 w-24 h-24 bg-teal-200/50 rounded-full animate-float"></div>
+            <div className="absolute bottom-10 right-10 w-32 h-32 bg-blue-200/50 rounded-full animate-float animation-delay-2000"></div>
+            <div className="absolute top-1/3 right-1/4 w-16 h-16 bg-indigo-200/50 rounded-full animate-float animation-delay-4000"></div>
 
             <div className="w-full max-w-sm bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-6 py-10 animate__animated animate__bounceInDown animate__slow">
                 <h2 className="text-4xl font-bold text-center text-c3 dark:text-white mb-8">

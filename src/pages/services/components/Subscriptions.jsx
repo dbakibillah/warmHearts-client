@@ -1,4 +1,4 @@
-import React from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { FaCheckCircle, FaCrown, FaHeartbeat, FaHandsHelping } from "react-icons/fa";
 import { Link } from "react-router";

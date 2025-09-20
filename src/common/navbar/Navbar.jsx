@@ -16,8 +16,8 @@ const NavItem = ({ children, to, className = "" }) => (
         className={({ isActive }) =>
             `px-3 py-2 rounded-lg transition-all text-sm ${
                 isActive
-                    ? "text-primary font-semibold bg-primary/10"
-                    : "text-gray-700 hover:bg-gray-100"
+                    ? "text-teal-700 font-semibold bg-teal-100"
+                    : "text-gray-700 hover:bg-teal-50"
             } ${className}`
         }
     >
@@ -34,7 +34,7 @@ const UserDropdown = memo(({ user, onLogout }) => {
                 tabIndex={0}
                 className="btn btn-ghost btn-circle avatar group"
             >
-                <div className="w-10 rounded-full ring-2 ring-primary ring-offset-2 ring-offset-white transition-all duration-300 group-hover:ring-offset-4">
+                <div className="w-10 rounded-full ring-2 ring-teal-600 ring-offset-2 ring-offset-white transition-all duration-300 group-hover:ring-offset-4">
                     <img
                         src={userPhoto}
                         alt="User Avatar"
@@ -66,7 +66,7 @@ const UserDropdown = memo(({ user, onLogout }) => {
                 <li>
                     <Link
                         to="/dashboard"
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-teal-50 rounded-md transition-colors"
                     >
                         <BsGrid3X3Gap className="w-5 h-5 mr-2" />
                         Dashboard
@@ -90,7 +90,7 @@ const GuestActions = memo(() => (
     <div className="flex space-x-2">
         <Link
             to="/login"
-            className="px-6 py-2 rounded-full bg-gradient-to-r from-primary to-secondary text-white font-medium hover:from-secondary hover:to-primary transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            className="px-6 py-2 rounded-full bg-gradient-to-r from-teal-600 to-teal-700 text-white font-medium hover:from-teal-700 hover:to-teal-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
         >
             Login
         </Link>
@@ -133,9 +133,9 @@ const Navbar = () => {
                     <div className="dropdown lg:hidden">
                         <label
                             tabIndex={0}
-                            className="btn btn-ghost hover:bg-gray-100"
+                            className="btn btn-ghost hover:bg-teal-50"
                         >
-                            <BsList className="h-6 w-6" />
+                            <BsList className="h-6 w-6 text-teal-700" />
                         </label>
                         <ul
                             tabIndex={0}
@@ -153,8 +153,8 @@ const Navbar = () => {
 
                     {/* Logo */}
                     <Link to="/" className="flex items-center space-x-2">
-                        <h1 className="text-2xl font-bold text-primary">
-                            Justifi
+                        <h1 className="text-2xl font-bold text-teal-700">
+                            WarmHearts
                         </h1>
                     </Link>
                 </div>

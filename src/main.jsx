@@ -13,6 +13,7 @@ import AuthProvider from "./providers/AuthProviders";
 import Root from "./routes/Root";
 import Dashboard from "./dashboard/Dashboard";
 import DashboardHome from "./dashboard/member/dashboardHome/DashboardHome";
+import AboutUs from "./pages/about/AboutUs";
 
 const queryClient = new QueryClient();
 
@@ -23,8 +24,15 @@ createRoot(document.getElementById("root")).render(
                 <Routes>
                     <Route path="/" element={<Root />}>
                         <Route index element={<Home />} />
-                        <Route path="/subscription" element={<Subscription />} />
-                        <Route path="/appointment" element={<AppointmentForm />} />
+                        <Route path="/about" element={<AboutUs />} />
+                        <Route
+                            path="/subscription"
+                            element={<Subscription />}
+                        />
+                        <Route
+                            path="/appointment"
+                            element={<AppointmentForm />}
+                        />
                         <Route path="/terms" element={<TermsAndConditions />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Registration />} />
@@ -32,7 +40,6 @@ createRoot(document.getElementById("root")).render(
 
                     <Route path="/dashboard" element={<Dashboard />}>
                         <Route path="/dashboard" element={<DashboardHome />} />
-                        
                     </Route>
                 </Routes>
             </QueryClientProvider>

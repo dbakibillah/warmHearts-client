@@ -8,8 +8,9 @@ import {
     FaUser,
     FaUtensils,
     FaHandHoldingHeart,
-    FaStar
+    FaStar,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const AppointmentForm = () => {
     const containerVariants = {
@@ -17,9 +18,9 @@ const AppointmentForm = () => {
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.1
-            }
-        }
+                staggerChildren: 0.1,
+            },
+        },
     };
 
     const itemVariants = {
@@ -29,9 +30,9 @@ const AppointmentForm = () => {
             opacity: 1,
             transition: {
                 duration: 0.5,
-                ease: "easeOut"
-            }
-        }
+                ease: "easeOut",
+            },
+        },
     };
 
     return (
@@ -50,7 +51,7 @@ const AppointmentForm = () => {
                 {/* Header with decorative elements */}
                 <div className="text-center mb-8 relative">
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full"></div>
-                    <motion.h2 
+                    <motion.h2
                         className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2"
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -58,17 +59,19 @@ const AppointmentForm = () => {
                     >
                         Register an Elderly Person
                     </motion.h2>
-                    <motion.p 
+                    <motion.p
                         className="text-gray-600 text-lg"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}
                     >
-                        We care with <FaHeartbeat className="inline text-pink-500 mx-1" /> compassion and expertise
+                        We care with{" "}
+                        <FaHeartbeat className="inline text-pink-500 mx-1" />{" "}
+                        compassion and expertise
                     </motion.p>
                 </div>
 
-                <motion.form 
+                <motion.form
                     className="grid grid-cols-1 md:grid-cols-2 gap-6"
                     variants={containerVariants}
                     initial="hidden"
@@ -234,24 +237,28 @@ const AppointmentForm = () => {
                     </motion.div>
 
                     {/* Submit Button */}
-                    <motion.div className="col-span-2 mt-4" variants={itemVariants}>
-                        <motion.button
-                            type="submit"
-                            className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group"
-                            whileHover={{ 
-                                scale: 1.02,
-                                background: "linear-gradient(45deg, #4f46e5, #7c3aed)"
-                            }}
-                            whileTap={{ scale: 0.98 }}
-                        >
-                            <span className="mr-2">Submit Appointment</span>
-                            <FaHandHoldingHeart className="group-hover:scale-110 transition-transform" />
-                        </motion.button>
+                    <motion.div
+                        className="col-span-2 mt-4"
+                        variants={itemVariants}
+                    >
+                        <Link to="/terms">
+                            <motion.button
+                                type="button"
+                                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group"
+                                whileHover={{
+                                    scale: 1.02,
+                                }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                <span className="mr-2">Submit Appointment</span>
+                                <FaHandHoldingHeart className="group-hover:scale-110 transition-transform" />
+                            </motion.button>
+                        </Link>
                     </motion.div>
                 </motion.form>
 
                 {/* Footer note */}
-                <motion.div 
+                <motion.div
                     className="mt-6 text-center text-gray-500 text-sm flex items-center justify-center"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -262,24 +269,6 @@ const AppointmentForm = () => {
                     <FaStar className="text-yellow-400 ml-1" />
                 </motion.div>
             </motion.div>
-
-            <style jsx>{`
-                @keyframes blob {
-                    0% { transform: translate(0px, 0px) scale(1); }
-                    33% { transform: translate(30px, -50px) scale(1.1); }
-                    66% { transform: translate(-20px, 20px) scale(0.9); }
-                    100% { transform: translate(0px, 0px) scale(1); }
-                }
-                .animate-blob {
-                    animation: blob 7s infinite;
-                }
-                .animation-delay-2000 {
-                    animation-delay: 2s;
-                }
-                .animation-delay-4000 {
-                    animation-delay: 4s;
-                }
-            `}</style>
         </section>
     );
 };

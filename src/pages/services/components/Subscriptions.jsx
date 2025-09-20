@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import {
     FaCheckCircle,
@@ -182,7 +181,13 @@ const Subscription = () => {
 
                                 {/* CTA Button */}
                                 <div className="p-6 pt-0">
-                                    <Link to="/appointment" state={{ plan }}>
+                                    <Link
+                                        to="/appointment"
+                                        state={{
+                                            selectedPlan: plan.title,
+                                            price: plan.price,
+                                        }}
+                                    >
                                         <motion.button
                                             whileHover={{
                                                 scale: 1.02,
@@ -191,7 +196,7 @@ const Subscription = () => {
                                                     : "#2563eb",
                                             }}
                                             whileTap={{ scale: 0.98 }}
-                                            className={`w-full py-3 rounded-md font-medium text-sm transition-colors duration-200 ${
+                                            className={`w-full py-3 rounded-md font-medium text-sm transition-colors duration-200 cursor-pointer ${
                                                 plan.popular
                                                     ? "bg-amber-600 hover:bg-amber-700 text-white"
                                                     : "bg-blue-600 hover:bg-blue-700 text-white"

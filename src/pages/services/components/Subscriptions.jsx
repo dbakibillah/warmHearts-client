@@ -7,6 +7,7 @@ import {
     FaHandsHelping,
     FaStar,
 } from "react-icons/fa";
+import { Link } from "react-router";
 
 const Subscription = () => {
     const plans = [
@@ -194,22 +195,26 @@ const Subscription = () => {
 
                                 {/* CTA Button */}
                                 <div className="p-6 pt-0">
-                                    <motion.button
-                                        whileHover={{
-                                            scale: 1.02,
-                                            backgroundColor: plan.popular
-                                                ? "#d97706"
-                                                : "#2563eb",
-                                        }}
-                                        whileTap={{ scale: 0.98 }}
-                                        className={`w-full py-3 rounded-md font-medium text-sm transition-colors duration-200 ${
-                                            plan.popular
-                                                ? "bg-amber-600 hover:bg-amber-700 text-white"
-                                                : "bg-blue-600 hover:bg-blue-700 text-white"
-                                        }`}
+                                    <Link
+                                        to="/appointment"
                                     >
-                                        Select Plan
-                                    </motion.button>
+                                        <motion.button
+                                            whileHover={{
+                                                scale: 1.02,
+                                                backgroundColor: plan.popular
+                                                    ? "#d97706"
+                                                    : "#2563eb",
+                                            }}
+                                            whileTap={{ scale: 0.98 }}
+                                            className={`w-full py-3 rounded-md font-medium text-sm transition-colors duration-200 ${
+                                                plan.popular
+                                                    ? "bg-amber-600 hover:bg-amber-700 text-white"
+                                                    : "bg-blue-600 hover:bg-blue-700 text-white"
+                                            }`}
+                                        >
+                                            Select Plan
+                                        </motion.button>
+                                    </Link>
                                 </div>
                             </div>
                         </motion.div>

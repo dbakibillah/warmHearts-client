@@ -7,7 +7,7 @@ import {
     FaHandsHelping,
     FaStar,
 } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const Subscription = () => {
     const plans = [
@@ -24,8 +24,6 @@ const Subscription = () => {
                 "3 meals per day (simple diet)",
                 "1 cup tea/snack in afternoon",
             ],
-            color: "from-blue-500 to-blue-600",
-            bgColor: "from-blue-50 to-blue-100",
             popular: false,
         },
         {
@@ -41,8 +39,6 @@ const Subscription = () => {
                 "Morning walk & games",
                 "3 meals (fish/meat 3 days)",
             ],
-            color: "from-green-500 to-green-600",
-            bgColor: "from-green-50 to-green-100",
             popular: false,
         },
         {
@@ -58,8 +54,6 @@ const Subscription = () => {
                 "Physiotherapy monthly",
                 "Balanced meals + milk/snacks",
             ],
-            color: "from-purple-500 to-purple-600",
-            bgColor: "from-purple-50 to-purple-100",
             popular: false,
         },
         {
@@ -75,8 +69,6 @@ const Subscription = () => {
                 "4 meals + Custom nutrition",
                 "Imported fruits & supplements",
             ],
-            color: "from-amber-500 to-amber-600",
-            bgColor: "from-amber-50 to-amber-100",
             popular: true,
         },
     ];
@@ -85,9 +77,7 @@ const Subscription = () => {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
-            transition: {
-                staggerChildren: 0.2,
-            },
+            transition: { staggerChildren: 0.2 },
         },
     };
 
@@ -96,10 +86,7 @@ const Subscription = () => {
         visible: {
             y: 0,
             opacity: 1,
-            transition: {
-                duration: 0.6,
-                ease: "easeOut",
-            },
+            transition: { duration: 0.6, ease: "easeOut" },
         },
     };
 
@@ -195,23 +182,23 @@ const Subscription = () => {
 
                                 {/* CTA Button */}
                                 <div className="p-6 pt-0">
-                                    <Link to="/appointment"  state={{ plan: plan }}>
-                                    <motion.button
-                                        whileHover={{
-                                            scale: 1.02,
-                                            backgroundColor: plan.popular
-                                                ? "#d97706"
-                                                : "#2563eb",
-                                        }}
-                                        whileTap={{ scale: 0.98 }}
-                                        className={`w-full py-3 rounded-md font-medium text-sm transition-colors duration-200 ${
-                                            plan.popular
-                                                ? "bg-amber-600 hover:bg-amber-700 text-white"
-                                                : "bg-blue-600 hover:bg-blue-700 text-white"
-                                        }`}
-                                    >
-                                        Select Plan
-                                    </motion.button>
+                                    <Link to="/appointment" state={{ plan }}>
+                                        <motion.button
+                                            whileHover={{
+                                                scale: 1.02,
+                                                backgroundColor: plan.popular
+                                                    ? "#d97706"
+                                                    : "#2563eb",
+                                            }}
+                                            whileTap={{ scale: 0.98 }}
+                                            className={`w-full py-3 rounded-md font-medium text-sm transition-colors duration-200 ${
+                                                plan.popular
+                                                    ? "bg-amber-600 hover:bg-amber-700 text-white"
+                                                    : "bg-blue-600 hover:bg-blue-700 text-white"
+                                            }`}
+                                        >
+                                            Select Plan
+                                        </motion.button>
                                     </Link>
                                 </div>
                             </div>

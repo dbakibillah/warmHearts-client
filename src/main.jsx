@@ -11,6 +11,8 @@ import AppointmentForm from "./pages/services/components/AppointmentForm";
 import Subscription from "./pages/services/components/Subscriptions";
 import AuthProvider from "./providers/AuthProviders";
 import Root from "./routes/Root";
+import Dashboard from "./dashboard/Dashboard";
+import DashboardHome from "./dashboard/member/dashboardHome/DashboardHome";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +28,11 @@ createRoot(document.getElementById("root")).render(
                         <Route path="/terms" element={<TermsAndConditions />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Registration />} />
+                    </Route>
+
+                    <Route path="/dashboard" element={<Dashboard />}>
+                        <Route path="/dashboard" element={<DashboardHome />} />
+                        
                     </Route>
                 </Routes>
             </QueryClientProvider>

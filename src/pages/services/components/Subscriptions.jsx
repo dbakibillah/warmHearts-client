@@ -7,7 +7,7 @@ import {
     FaHandsHelping,
     FaStar,
 } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const Subscription = () => {
     const plans = [
@@ -197,6 +197,10 @@ const Subscription = () => {
                                 <div className="p-6 pt-0">
                                     <Link
                                         to="/appointment"
+                                        state={{
+                                            selectedPlan: plan.title,
+                                            price: plan.price,
+                                        }}
                                     >
                                         <motion.button
                                             whileHover={{
@@ -206,7 +210,7 @@ const Subscription = () => {
                                                     : "#2563eb",
                                             }}
                                             whileTap={{ scale: 0.98 }}
-                                            className={`w-full py-3 rounded-md font-medium text-sm transition-colors duration-200 ${
+                                            className={`w-full py-3 rounded-md font-medium text-sm transition-colors duration-200 cursor-pointer ${
                                                 plan.popular
                                                     ? "bg-amber-600 hover:bg-amber-700 text-white"
                                                     : "bg-blue-600 hover:bg-blue-700 text-white"

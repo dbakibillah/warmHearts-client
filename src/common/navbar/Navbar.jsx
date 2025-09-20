@@ -7,7 +7,7 @@ import { AuthContext } from "../../providers/AuthProviders";
 const NAV_LINKS = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
-    { name: "Community", path: "/community" },
+    { name: "Pricing", path: "/subscription" },
 ];
 
 const NavItem = ({ children, to, className = "" }) => (

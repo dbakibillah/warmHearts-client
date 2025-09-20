@@ -10,6 +10,7 @@ import AppointmentForm from "./pages/services/components/AppointmentForm";
 import Loading from "./common/loading/Loading";
 import Login from "./pages/authentication/Login";
 import Registration from "./pages/authentication/Registration";
+import TermsAndConditions from "./pages/services/components/TermsAndCondition";
 
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ createRoot(document.getElementById("root")).render(
                         <Route path="/" element={<Home />} />
                         <Route path="/subscription" element={<Subscription />} />
                         <Route path="/appointment" element={<AppointmentForm />} />
+                        <Route path="/terms" element={<TermsAndConditions />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Registration />} />
                     </Route>

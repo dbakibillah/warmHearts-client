@@ -1,6 +1,7 @@
-import React from "react";
+// eslint-disable react/no-unescaped-entities
 import { motion } from "framer-motion";
 import { FaUser, FaEnvelope, FaPhone, FaCalendarAlt, FaNotesMedical, FaUtensils, FaHeartbeat } from "react-icons/fa";
+import { Link } from "react-router";
 
 const AppointmentForm = () => {
   return (
@@ -104,6 +105,7 @@ const AppointmentForm = () => {
           </div>
 
           {/* Submit */}
+          <Link to="/terms">
           <motion.button
             type="submit"
             className="col-span-2 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition-all"
@@ -112,6 +114,7 @@ const AppointmentForm = () => {
           >
             Submit Appointment
           </motion.button>
+          </Link>
         </form>
       </motion.div>
     </section>

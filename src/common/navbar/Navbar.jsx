@@ -1,21 +1,8 @@
-import {
-    memo,
-    useCallback,
-    useContext,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import { memo, useCallback, useContext } from "react";
 import { BsBoxArrowRight, BsGrid3X3Gap, BsList } from "react-icons/bs";
-import { IoMdArrowDropdown } from "react-icons/io";
 import { Link, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../providers/AuthProviders";
-
-const SERVICES = [
-    { name: "ADR", path: "/adr" },
-    { name: "ODR", path: "/odr" },
-];
 
 const NAV_LINKS = [
     { name: "Home", path: "/" },
@@ -37,89 +24,6 @@ const NavItem = ({ children, to, className = "" }) => (
         {children}
     </NavLink>
 );
-
-const ServicesDropdown = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef(null);
-
-    const toggle = useCallback((e) => {
-        e?.stopPropagation();
-        setIsOpen((prev) => !prev);
-    }, []);
-
-    const closeDropdown = useCallback(() => setIsOpen(false), []);
-
-    useEffect(() => {
-        const handleEsc = (e) => e.key === "Escape" && closeDropdown();
-        const handleClickOutside = (e) => {
-            if (
-                isOpen &&
-                dropdownRef.current &&
-                !dropdownRef.current.contains(e.target)
-            ) {
-                closeDropdown();
-            }
-        };
-
-        if (isOpen) {
-            document.addEventListener("keydown", handleEsc);
-            document.addEventListener("click", handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener("keydown", handleEsc);
-            document.removeEventListener("click", handleClickOutside);
-        };
-    }, [isOpen, closeDropdown]);
-
-    return (
-        <div ref={dropdownRef} className="relative">
-            <button
-                onClick={toggle}
-                className={`flex items-center gap-1 px-3 py-2 rounded-lg transition-all text-sm ${
-                    isOpen
-                        ? "text-primary font-semibold bg-primary/10"
-                        : "text-gray-700 hover:bg-gray-100"
-                }`}
-                aria-expanded={isOpen}
-                aria-haspopup="true"
-            >
-                Services
-                <IoMdArrowDropdown
-                    className={`transition-transform duration-200 ${
-                        isOpen ? "rotate-180" : ""
-                    }`}
-                />
-            </button>
-
-            {isOpen && (
-                <ul
-                    className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
-                    role="menu"
-                >
-                    {SERVICES.map((service) => (
-                        <li key={service.path} role="none">
-                            <NavLink
-                                to={service.path}
-                                onClick={closeDropdown}
-                                className={({ isActive }) =>
-                                    `flex items-center px-4 py-3 text-sm transition-colors ${
-                                        isActive
-                                            ? "bg-primary/10 text-primary"
-                                            : "text-gray-700 hover:bg-gray-100"
-                                    } first:rounded-t-lg last:rounded-b-lg`
-                                }
-                                role="menuitem"
-                            >
-                                {service.name}
-                            </NavLink>
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
-    );
-};
 
 const UserDropdown = memo(({ user, onLogout }) => {
     const userPhoto = user.photoURL || "https://via.placeholder.com/150";
@@ -244,9 +148,6 @@ const Navbar = () => {
                                     </NavItem>
                                 </li>
                             ))}
-                            <li>
-                                <ServicesDropdown />
-                            </li>
                         </ul>
                     </div>
 
@@ -266,9 +167,6 @@ const Navbar = () => {
                                 <NavItem to={link.path}>{link.name}</NavItem>
                             </li>
                         ))}
-                        <li>
-                            <ServicesDropdown />
-                        </li>
                     </ul>
                 </div>
 

@@ -9,9 +9,11 @@ import {
     FaUser,
     FaUtensils,
 } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 const AppointmentForm = () => {
+  const location = useLocation();
+    const selectedPlan = location.state?.plan;
     return (
         <section className="flex justify-center items-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6">
             <motion.div

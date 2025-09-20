@@ -7,6 +7,7 @@ import {
     FaHandsHelping,
     FaStar,
 } from "react-icons/fa";
+import { Link } from "react-router";
 
 const Subscription = () => {
     const plans = [
@@ -194,6 +195,7 @@ const Subscription = () => {
 
                                 {/* CTA Button */}
                                 <div className="p-6 pt-0">
+                                    <Link to="/appointment"  state={{ plan: plan }}>
                                     <motion.button
                                         whileHover={{
                                             scale: 1.02,
@@ -210,6 +212,7 @@ const Subscription = () => {
                                     >
                                         Select Plan
                                     </motion.button>
+                                    </Link>
                                 </div>
                             </div>
                         </motion.div>

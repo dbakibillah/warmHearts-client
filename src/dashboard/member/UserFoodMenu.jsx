@@ -12,9 +12,8 @@ import {
 import { toast } from "react-toastify";
 import Loading from "../../common/loading/Loading";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import useUserData from "../../hooks/useUserData";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import axios from "axios";
+import useUserData from "../../hooks/useUserData";
 
 const UserFoodMenu = () => {
     const [selectedDay, setSelectedDay] = useState("");

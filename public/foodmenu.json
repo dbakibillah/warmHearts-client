@@ -1,0 +1,293 @@
+[
+    {
+        "day": "Sunday",
+        "meals": {
+            "breakfast": [
+                {
+                    "id": 1,
+                    "name": "রুটি ও ডিম ভাজি",
+                    "calories": 320,
+                    "image": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 2,
+                    "name": "চিড়া দই কলা",
+                    "calories": 280,
+                    "image": "https://images.unsplash.com/photo-1568901343683-35d4f5f84c07?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 3,
+                    "name": "পরোটা ও আলুর দম",
+                    "calories": 400,
+                    "image": "https://images.unsplash.com/photo-1630918655889-2485835f6daa?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "lunch": [
+                {
+                    "id": 4,
+                    "name": "ভাত, ডাল ও মাছের ঝোল",
+                    "calories": 520,
+                    "image": "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 5,
+                    "name": "সবজি খিচুড়ি",
+                    "calories": 480,
+                    "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 6,
+                    "name": "ভাত, মুরগির ঝোল ও সালাদ",
+                    "calories": 560,
+                    "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "snacks": [
+                {
+                    "id": 7,
+                    "name": "সিঙ্গারা ও চা",
+                    "calories": 200,
+                    "image": "https://images.unsplash.com/photo-1563720223185-11003d516935?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 8,
+                    "name": "চপ ও বিস্কুট",
+                    "calories": 220,
+                    "image": "https://images.unsplash.com/photo-1558961367-f5ef86ddb9bf?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 9,
+                    "name": "ফল ও দই",
+                    "calories": 180,
+                    "image": "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "dinner": [
+                {
+                    "id": 10,
+                    "name": "রুটি ও ডাল",
+                    "calories": 300,
+                    "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 11,
+                    "name": "সবজি ভাজি ও ডিম সেদ্ধ",
+                    "calories": 330,
+                    "image": "https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 12,
+                    "name": "সবজি খিচুড়ি",
+                    "calories": 420,
+                    "image": "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ]
+        }
+    },
+    {
+        "day": "Monday",
+        "meals": {
+            "breakfast": [
+                {
+                    "id": 13,
+                    "name": "লুচি ও আলুর তরকারি",
+                    "calories": 420,
+                    "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 14,
+                    "name": "সুজি হালুয়া",
+                    "calories": 300,
+                    "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 15,
+                    "name": "চা ও বিস্কুট",
+                    "calories": 150,
+                    "image": "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "lunch": [
+                {
+                    "id": 16,
+                    "name": "ভাত, গরুর মাংস ও সালাদ",
+                    "calories": 640,
+                    "image": "https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 17,
+                    "name": "সবজি পোলাও",
+                    "calories": 480,
+                    "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 18,
+                    "name": "ভাত, ডিমের কারি ও সবজি",
+                    "calories": 520,
+                    "image": "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "snacks": [
+                {
+                    "id": 19,
+                    "name": "সমুচা ও চা",
+                    "calories": 210,
+                    "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 20,
+                    "name": "মুড়ি ও চানাচুর",
+                    "calories": 180,
+                    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 21,
+                    "name": "ফল",
+                    "calories": 120,
+                    "image": "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "dinner": [
+                {
+                    "id": 22,
+                    "name": "রুটি ও সবজি",
+                    "calories": 340,
+                    "image": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 23,
+                    "name": "খিচুড়ি ও চাটনি",
+                    "calories": 430,
+                    "image": "https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 24,
+                    "name": "সবজি স্যুপ",
+                    "calories": 200,
+                    "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ]
+        }
+    },
+    {
+        "day": "Tuesday",
+        "meals": {
+            "breakfast": [
+                {
+                    "id": 25,
+                    "name": "রুটি ও সবজি",
+                    "calories": 330,
+                    "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 26,
+                    "name": "চা ও কলা",
+                    "calories": 150,
+                    "image": "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 27,
+                    "name": "চিড়া দই আপেল",
+                    "calories": 290,
+                    "image": "https://images.unsplash.com/photo-1568901343683-35d4f5f84c07?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "lunch": [
+                {
+                    "id": 28,
+                    "name": "ভাত, মাছ ভাজা ও ডাল",
+                    "calories": 540,
+                    "image": "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 29,
+                    "name": "মুরগি বিরিয়ানি",
+                    "calories": 580,
+                    "image": "https://images.unsplash.com/photo-1563379091339-03246963d96c?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 30,
+                    "name": "ভাত, সবজি তরকারি",
+                    "calories": 460,
+                    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "snacks": [
+                {
+                    "id": 31,
+                    "name": "পাকোড়া ও চা",
+                    "calories": 230,
+                    "image": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 32,
+                    "name": "জুস ও কেক",
+                    "calories": 190,
+                    "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 33,
+                    "name": "বাদাম ও ফল",
+                    "calories": 170,
+                    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "dinner": [
+                {
+                    "id": 34,
+                    "name": "পরোটা ও ডাল",
+                    "calories": 380,
+                    "image": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 35,
+                    "name": "নুডলস",
+                    "calories": 420,
+                    "image": "https://images.unsplash.com/photo-1585032221-972c2a087151?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 36,
+                    "name": "সবজি ও রুটি",
+                    "calories": 320,
+                    "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ]
+        }
+    }
+]

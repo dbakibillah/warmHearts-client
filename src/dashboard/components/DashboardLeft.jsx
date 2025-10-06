@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
+    FaBox,
     FaCalendarAlt,
     FaChartBar,
     FaChevronLeft,
@@ -10,52 +11,157 @@ import {
     FaHeart,
     FaHome,
     FaPills,
+    FaUserMd,
+    FaUsers,
+    FaUserShield,
     FaUtensils,
 } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
+import useUserData from "../../hooks/useUserData";
 
 const DashboardLeft = () => {
+    const { currentUser, userRole } = useUserData();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [activeItem, setActiveItem] = useState("Dashboard");
     const location = useLocation();
 
-    const menuItems = [
+    // Common menu items for all roles
+    const commonMenuItems = [
         {
             name: "Dashboard",
             path: "/dashboard",
             icon: <FaDashcube className="text-xl" />,
+            roles: ["user", "admin", "staff", "doctor"],
         },
+        {
+            name: "Profile",
+            path: "/dashboard/profile",
+            icon: <FaUserShield className="text-xl" />,
+            roles: ["user", "admin", "staff", "doctor"],
+        },
+    ];
+
+    // Role-specific menu items
+    const userMenuItems = [
         {
             name: "Food Menu",
             path: "/dashboard/food-menu",
             icon: <FaUtensils className="text-xl" />,
+            roles: ["user"],
         },
         {
             name: "Medicines",
             path: "/dashboard/medicines",
             icon: <FaPills className="text-xl" />,
+            roles: ["user"],
         },
         {
             name: "Appointments",
             path: "/dashboard/appointments",
             icon: <FaCalendarAlt className="text-xl" />,
+            roles: ["user"],
         },
         {
             name: "Subscriptions",
             path: "/dashboard/subscriptions",
             icon: <FaCreditCard className="text-xl" />,
+            roles: ["user"],
         },
         {
             name: "Reports",
             path: "/dashboard/reports",
             icon: <FaChartBar className="text-xl" />,
-        },
-        {
-            name: "Settings",
-            path: "/dashboard/settings",
-            icon: <FaCog className="text-xl" />,
+            roles: ["user"],
         },
     ];
+
+    const adminMenuItems = [
+        {
+            name: "User Management",
+            path: "/dashboard/user-management",
+            icon: <FaUsers className="text-xl" />,
+            roles: ["admin"],
+        },
+        {
+            name: "Inventory",
+            path: "/dashboard/inventory",
+            icon: <FaBox className="text-xl" />,
+            roles: ["admin", "staff"],
+        },
+        {
+            name: "Appointments",
+            path: "/dashboard/appointments",
+            icon: <FaCalendarAlt className="text-xl" />,
+            roles: ["admin"],
+        },
+        {
+            name: "Reports",
+            path: "/dashboard/reports",
+            icon: <FaChartBar className="text-xl" />,
+            roles: ["admin"],
+        },
+        {
+            name: "System Settings",
+            path: "/dashboard/system-settings",
+            icon: <FaCog className="text-xl" />,
+            roles: ["admin"],
+        },
+    ];
+
+    const staffMenuItems = [
+        {
+            name: "Food Management",
+            path: "/dashboard/food-management",
+            icon: <FaUtensils className="text-xl" />,
+            roles: ["staff"],
+        },
+        {
+            name: "Medicine Management",
+            path: "/dashboard/medicine-management",
+            icon: <FaPills className="text-xl" />,
+            roles: ["staff"],
+        },
+        {
+            name: "Appointment Management",
+            path: "/dashboard/appointment-management",
+            icon: <FaCalendarAlt className="text-xl" />,
+            roles: ["staff"],
+        },
+    ];
+
+    const doctorMenuItems = [
+        {
+            name: "My Appointments",
+            path: "/dashboard/my-appointments",
+            icon: <FaCalendarAlt className="text-xl" />,
+            roles: ["doctor"],
+        },
+        {
+            name: "Patient Records",
+            path: "/dashboard/patient-records",
+            icon: <FaUserMd className="text-xl" />,
+            roles: ["doctor"],
+        },
+        {
+            name: "Prescriptions",
+            path: "/dashboard/prescriptions",
+            icon: <FaPills className="text-xl" />,
+            roles: ["doctor"],
+        },
+    ];
+
+    // Combine all menu items and filter based on user role
+    const allMenuItems = [
+        ...commonMenuItems,
+        ...userMenuItems,
+        ...adminMenuItems,
+        ...staffMenuItems,
+        ...doctorMenuItems,
+    ];
+
+    const menuItems = allMenuItems.filter((item) =>
+        item.roles.includes(userRole?.toLowerCase())
+    );
 
     // Set active item based on current route
     useEffect(() => {
@@ -67,7 +173,7 @@ const DashboardLeft = () => {
         if (currentMenuItem) {
             setActiveItem(currentMenuItem.name);
         }
-    }, [location.pathname]);
+    }, [location.pathname, menuItems]);
 
     const toggleSidebar = () => {
         setIsCollapsed(!isCollapsed);
@@ -134,15 +240,24 @@ const DashboardLeft = () => {
                 </ul>
             </nav>
 
+            {/* User Info Section */}
             <div className="absolute bottom-0 w-full p-4 border-t border-teal-700">
                 <div className="flex items-center space-x-3 mb-4 p-3 rounded-lg hover:bg-teal-700 transition-colors duration-200">
                     <div className="w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center">
-                        <span className="font-bold text-white">U</span>
+                        <img
+                            src={currentUser?.photo}
+                            className="w-8 h-8 rounded-full"
+                            alt=""
+                        />
                     </div>
                     {!isCollapsed && (
-                        <div>
-                            <p className="text-sm font-medium">User Name</p>
-                            <p className="text-xs text-teal-200">Admin</p>
+                        <div className="min-w-0 flex-1">
+                            <p className="text-sm font-medium truncate">
+                                {currentUser?.name || "User"}
+                            </p>
+                            <p className="text-xs text-teal-200 truncate">
+                                {userRole || "User"}
+                            </p>
                         </div>
                     )}
                 </div>

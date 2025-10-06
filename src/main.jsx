@@ -14,6 +14,7 @@ import Root from "./routes/Root";
 import Dashboard from "./dashboard/Dashboard";
 import DashboardHome from "./dashboard/member/dashboardHome/DashboardHome";
 import AboutUs from "./pages/about/AboutUs";
+import DashboardFood from "./dashboard/member/dashboardHome/DashboardFood";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ createRoot(document.getElementById("root")).render(
 
                     <Route path="/dashboard" element={<Dashboard />}>
                         <Route path="/dashboard" element={<DashboardHome />} />
+                        <Route path="food-menu" element={<DashboardFood />} />
                     </Route>
                 </Routes>
             </QueryClientProvider>

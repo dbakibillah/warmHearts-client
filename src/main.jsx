@@ -15,6 +15,7 @@ import TermsAndConditions from "./pages/services/components/TermsAndCondition";
 import AuthProvider from "./providers/AuthProviders";
 import Root from "./routes/Root";
 import UserFoodMenu from "./dashboard/member/UserFoodMenu";
+import { ToastContainer } from "react-toastify";
 
 const queryClient = new QueryClient();
 
@@ -49,5 +50,6 @@ createRoot(document.getElementById("root")).render(
                 </Routes>
             </QueryClientProvider>
         </AuthProvider>
+        <ToastContainer />
     </BrowserRouter>
 );

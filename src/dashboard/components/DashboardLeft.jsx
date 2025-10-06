@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     FaBox,
     FaCalendarAlt,
@@ -22,7 +22,6 @@ import useUserData from "../../hooks/useUserData";
 const DashboardLeft = () => {
     const { currentUser, userRole } = useUserData();
     const [isCollapsed, setIsCollapsed] = useState(false);
-    const [activeItem, setActiveItem] = useState("Dashboard");
     const location = useLocation();
 
     // Common menu items for all roles
@@ -163,17 +162,28 @@ const DashboardLeft = () => {
         item.roles.includes(userRole?.toLowerCase())
     );
 
-    // Set active item based on current route
-    useEffect(() => {
-        const currentMenuItem = menuItems.find(
-            (item) =>
-                location.pathname === item.path ||
-                location.pathname.startsWith(item.path + "/")
-        );
-        if (currentMenuItem) {
-            setActiveItem(currentMenuItem.name);
+    // Helper function to check if item is active - SIMPLIFIED
+    const isActiveItem = (item) => {
+        // Exact match
+        if (location.pathname === item.path) {
+            return true;
         }
-    }, [location.pathname, menuItems]);
+
+        // For nested routes, only activate if it's a direct child
+        // This prevents multiple items from being active
+        if (location.pathname.startsWith(item.path + "/")) {
+            // Special case for dashboard root - only activate dashboard for exact match or direct children
+            if (
+                item.path === "/dashboard" &&
+                location.pathname !== "/dashboard"
+            ) {
+                return false;
+            }
+            return true;
+        }
+
+        return false;
+    };
 
     const toggleSidebar = () => {
         setIsCollapsed(!isCollapsed);
@@ -211,32 +221,36 @@ const DashboardLeft = () => {
             {/* Navigation Menu */}
             <nav className="mt-6">
                 <ul className="space-y-2 px-4">
-                    {menuItems.map((item) => (
-                        <li key={item.name}>
-                            <Link
-                                to={item.path}
-                                onClick={() => setActiveItem(item.name)}
-                                className={`w-full flex items-center space-x-3 p-3 rounded-xl transition-all duration-200 hover:bg-teal-700 hover:transform hover:scale-105 ${
-                                    activeItem === item.name
-                                        ? "bg-white text-teal-700 shadow-lg font-semibold"
-                                        : "text-teal-100"
-                                }`}
-                            >
-                                <span
-                                    className={`${
-                                        activeItem === item.name
-                                            ? "text-teal-600"
-                                            : "text-white"
+                    {menuItems.map((item) => {
+                        const isActive = isActiveItem(item);
+                        return (
+                            <li key={item.name}>
+                                <Link
+                                    to={item.path}
+                                    className={`w-full flex items-center space-x-3 p-3 rounded-xl transition-all duration-200 hover:bg-teal-700 hover:transform hover:scale-105 ${
+                                        isActive
+                                            ? "bg-white text-teal-700 shadow-lg font-semibold"
+                                            : "text-teal-100"
                                     }`}
                                 >
-                                    {item.icon}
-                                </span>
-                                {!isCollapsed && (
-                                    <span className="text-sm">{item.name}</span>
-                                )}
-                            </Link>
-                        </li>
-                    ))}
+                                    <span
+                                        className={`${
+                                            isActive
+                                                ? "text-teal-700"
+                                                : "text-white"
+                                        }`}
+                                    >
+                                        {item.icon}
+                                    </span>
+                                    {!isCollapsed && (
+                                        <span className="text-sm">
+                                            {item.name}
+                                        </span>
+                                    )}
+                                </Link>
+                            </li>
+                        );
+                    })}
                 </ul>
             </nav>
 

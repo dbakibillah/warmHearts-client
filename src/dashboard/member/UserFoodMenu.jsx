@@ -1,339 +1,127 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import {
-    FaUtensils,
-    FaCheck,
-    FaTimes,
+    FaBolt,
     FaCalendarAlt,
+    FaCheck,
     FaFire,
+    FaTimes,
+    FaUser,
+    FaUtensils,
 } from "react-icons/fa";
+import { toast } from "react-toastify";
+import Loading from "../../common/loading/Loading";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-
-// Mock data - in real app, this would come from API
-const foodMenuData = [
-    {
-        day: "Sunday",
-        meals: {
-            breakfast: [
-                {
-                    id: 1,
-                    name: "রুটি ও ডিম ভাজি",
-                    calories: 320,
-                    image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 2,
-                    name: "চিড়া দই কলা",
-                    calories: 280,
-                    image: "https://images.unsplash.com/photo-1568901343683-35d4f5f84c07?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 3,
-                    name: "পরোটা ও আলুর দম",
-                    calories: 400,
-                    image: "https://images.unsplash.com/photo-1630918655889-2485835f6daa?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-            ],
-            lunch: [
-                {
-                    id: 4,
-                    name: "ভাত, ডাল ও মাছের ঝোল",
-                    calories: 520,
-                    image: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 5,
-                    name: "সবজি খিচুড়ি",
-                    calories: 480,
-                    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 6,
-                    name: "ভাত, মুরগির ঝোল ও সালাদ",
-                    calories: 560,
-                    image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-            ],
-            snacks: [
-                {
-                    id: 7,
-                    name: "সিঙ্গারা ও চা",
-                    calories: 200,
-                    image: "https://images.unsplash.com/photo-1563720223185-11003d516935?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 8,
-                    name: "চপ ও বিস্কুট",
-                    calories: 220,
-                    image: "https://images.unsplash.com/photo-1558961367-f5ef86ddb9bf?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 9,
-                    name: "ফল ও দই",
-                    calories: 180,
-                    image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-            ],
-            dinner: [
-                {
-                    id: 10,
-                    name: "রুটি ও ডাল",
-                    calories: 300,
-                    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 11,
-                    name: "সবজি ভাজি ও ডিম সেদ্ধ",
-                    calories: 330,
-                    image: "https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 12,
-                    name: "সবজি খিচুড়ি",
-                    calories: 420,
-                    image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-            ],
-        },
-    },
-    {
-        day: "Monday",
-        meals: {
-            breakfast: [
-                {
-                    id: 13,
-                    name: "লুচি ও আলুর তরকারি",
-                    calories: 420,
-                    image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 14,
-                    name: "সুজি হালুয়া",
-                    calories: 300,
-                    image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 15,
-                    name: "চা ও বিস্কুট",
-                    calories: 150,
-                    image: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-            ],
-            lunch: [
-                {
-                    id: 16,
-                    name: "ভাত, গরুর মাংস ও সালাদ",
-                    calories: 640,
-                    image: "https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 17,
-                    name: "সবজি পোলাও",
-                    calories: 480,
-                    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 18,
-                    name: "ভাত, ডিমের কারি ও সবজি",
-                    calories: 520,
-                    image: "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-            ],
-            snacks: [
-                {
-                    id: 19,
-                    name: "সমুচা ও চা",
-                    calories: 210,
-                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 20,
-                    name: "মুড়ি ও চানাচুর",
-                    calories: 180,
-                    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 21,
-                    name: "ফল",
-                    calories: 120,
-                    image: "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-            ],
-            dinner: [
-                {
-                    id: 22,
-                    name: "রুটি ও সবজি",
-                    calories: 340,
-                    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 23,
-                    name: "খিচুড়ি ও চাটনি",
-                    calories: 430,
-                    image: "https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 24,
-                    name: "সবজি স্যুপ",
-                    calories: 200,
-                    image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-            ],
-        },
-    },
-    {
-        day: "Tuesday",
-        meals: {
-            breakfast: [
-                {
-                    id: 25,
-                    name: "রুটি ও সবজি",
-                    calories: 330,
-                    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 26,
-                    name: "চা ও কলা",
-                    calories: 150,
-                    image: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 27,
-                    name: "চিড়া দই আপেল",
-                    calories: 290,
-                    image: "https://images.unsplash.com/photo-1568901343683-35d4f5f84c07?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-            ],
-            lunch: [
-                {
-                    id: 28,
-                    name: "ভাত, মাছ ভাজা ও ডাল",
-                    calories: 540,
-                    image: "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 29,
-                    name: "মুরগি বিরিয়ানি",
-                    calories: 580,
-                    image: "https://images.unsplash.com/photo-1563379091339-03246963d96c?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 30,
-                    name: "ভাত, সবজি তরকারি",
-                    calories: 460,
-                    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-            ],
-            snacks: [
-                {
-                    id: 31,
-                    name: "পাকোড়া ও চা",
-                    calories: 230,
-                    image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 32,
-                    name: "জুস ও কেক",
-                    calories: 190,
-                    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 33,
-                    name: "বাদাম ও ফল",
-                    calories: 170,
-                    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-            ],
-            dinner: [
-                {
-                    id: 34,
-                    name: "পরোটা ও ডাল",
-                    calories: 380,
-                    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 35,
-                    name: "নুডলস",
-                    calories: 420,
-                    image: "https://images.unsplash.com/photo-1585032221-972c2a087151?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-                {
-                    id: 36,
-                    name: "সবজি ও রুটি",
-                    calories: 320,
-                    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
-                    isAvailable: true,
-                },
-            ],
-        },
-    },
-];
+import useUserData from "../../hooks/useUserData";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import axios from "axios";
 
 const UserFoodMenu = () => {
-    const [selectedDay, setSelectedDay] = useState("Sunday");
+    const [selectedDay, setSelectedDay] = useState("");
     const [selectedMeals, setSelectedMeals] = useState({});
-    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [weekDays, setWeekDays] = useState([]);
+    const [activeMealType, setActiveMealType] = useState("all");
     const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
+    const { currentUser } = useUserData();
 
-    // Initialize selected meals
+    const generateWeekDays = () => {
+        const days = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+        ];
+        const today = new Date();
+        const week = [];
+
+        for (let i = 0; i < 7; i++) {
+            const nextDay = new Date(today);
+            nextDay.setDate(today.getDate() + i);
+            const dayName = days[nextDay.getDay()];
+            const dateString = nextDay.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+            });
+
+            week.push({
+                day: dayName,
+                date: dateString,
+                fullDate: nextDay.toISOString().split("T")[0],
+            });
+        }
+
+        return week;
+    };
+
     useEffect(() => {
-        const initialSelections = {};
-        foodMenuData.forEach((dayData) => {
-            initialSelections[dayData.day] = {
-                breakfast: null,
-                lunch: null,
-                snacks: null,
-                dinner: null,
-            };
-        });
-        setSelectedMeals(initialSelections);
+        const generatedWeek = generateWeekDays();
+        setWeekDays(generatedWeek);
+        if (generatedWeek.length > 0) {
+            setSelectedDay(generatedWeek[0].day);
+        }
     }, []);
 
+    const {
+        data: foodMenuData = [],
+        isLoading,
+        error,
+    } = useQuery({
+        queryKey: ["foodMenu"],
+        queryFn: async () => {
+            const res = await axiosPublic.get("/foodmenu");
+            return res.data;
+        },
+    });
+
+    // Initialize selected meals when data loads
+    useEffect(() => {
+        if (weekDays.length > 0) {
+            const initialSelections = {};
+            weekDays.forEach((dayInfo) => {
+                initialSelections[dayInfo.day] = {
+                    breakfast: null,
+                    lunch: null,
+                    snacks: null,
+                    dinner: null,
+                    date: dayInfo.fullDate,
+                    displayDate: dayInfo.date,
+                };
+            });
+            setSelectedMeals(initialSelections);
+        }
+    }, [weekDays]);
+
     const handleMealSelect = (mealType, foodItem) => {
+        if (!foodItem.isAvailable) {
+            toast.warning(`${foodItem.name} is currently unavailable`);
+            return;
+        }
+
+        const currentDayInfo = weekDays.find((day) => day.day === selectedDay);
+
         setSelectedMeals((prev) => ({
             ...prev,
             [selectedDay]: {
                 ...prev[selectedDay],
-                [mealType]: foodItem,
+                [mealType]: {
+                    ...foodItem,
+                    selectedDate: currentDayInfo?.fullDate,
+                    selectedDisplayDate: currentDayInfo?.date,
+                },
             },
         }));
+
+        toast.success(
+            `🍽️ Added ${foodItem.name} to ${getMealTypeName(mealType)}`
+        );
     };
 
     const handleMealDeselect = (mealType) => {
+        const mealName = selectedMeals[selectedDay]?.[mealType]?.name;
         setSelectedMeals((prev) => ({
             ...prev,
             [selectedDay]: {
@@ -341,6 +129,12 @@ const UserFoodMenu = () => {
                 [mealType]: null,
             },
         }));
+
+        if (mealName) {
+            toast.info(
+                `🗑️ Removed ${mealName} from ${getMealTypeName(mealType)}`
+            );
+        }
     };
 
     const calculateTotalCalories = (day) => {
@@ -348,7 +142,10 @@ const UserFoodMenu = () => {
         if (!daySelections) return 0;
 
         return Object.values(daySelections).reduce((total, meal) => {
-            return total + (meal?.calories || 0);
+            if (meal && typeof meal === "object" && "calories" in meal) {
+                return total + (meal?.calories || 0);
+            }
+            return total;
         }, 0);
     };
 
@@ -362,179 +159,433 @@ const UserFoodMenu = () => {
         return mealNames[mealType];
     };
 
-    const handleSubmitSelections = () => {
-        // In real app, send selectedMeals to backend
-        console.log("Selected meals:", selectedMeals);
-        setShowConfirmation(true);
+    const getMealTypeIcon = (mealType) => {
+        const icons = {
+            breakfast: "🌅",
+            lunch: "🍽️",
+            snacks: "🍎",
+            dinner: "🌙",
+        };
+        return icons[mealType];
+    };
 
-        // Hide confirmation after 3 seconds
-        setTimeout(() => setShowConfirmation(false), 3000);
+    const getMealTypeColor = (mealType) => {
+        const colors = {
+            all: "from-teal-500 to-emerald-600",
+            breakfast: "from-amber-500 to-orange-500",
+            lunch: "from-emerald-500 to-teal-500",
+            snacks: "from-purple-500 to-pink-500",
+            dinner: "from-blue-500 to-indigo-500",
+        };
+        return colors[mealType];
+    };
+
+    const handleSubmitSelections = () => {
+        const submissionData = {
+            userName: currentUser?.name || "Guest User",
+            userEmail: currentUser?.email || "guest@example.com",
+            selections: {},
+        };
+
+        Object.entries(selectedMeals).forEach(([day, daySelections]) => {
+            const dayInfo = weekDays.find((d) => d.day === day);
+            submissionData.selections[day] = {
+                date: dayInfo?.fullDate,
+                displayDate: dayInfo?.date,
+                meals: {
+                    breakfast: daySelections.breakfast,
+                    lunch: daySelections.lunch,
+                    snacks: daySelections.snacks,
+                    dinner: daySelections.dinner,
+                },
+                totalCalories: calculateTotalCalories(day),
+            };
+        });
+
+        axiosSecure.post("/selectedFoodMenu", submissionData);
+
+        toast.promise(
+            new Promise((resolve) => {
+                setTimeout(resolve, 1500);
+            }),
+            {
+                pending: "🚀 Saving your meal selections...",
+                success: "✅ Meal selections saved successfully! 🎉",
+                error: "❌ Failed to save selections. Please try again.",
+            }
+        );
     };
 
     const currentDayData = foodMenuData.find((day) => day.day === selectedDay);
+    const currentDayInfo = weekDays.find((day) => day.day === selectedDay);
+
+    const totalWeeklyCalories = weekDays.reduce(
+        (total, day) => total + calculateTotalCalories(day.day),
+        0
+    );
+
+    if (isLoading) {
+        return <Loading />;
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 flex items-center justify-center p-4">
+                <div className="text-center bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-12 max-w-md border border-white/20">
+                    <div className="w-20 h-20 bg-gradient-to-br from-red-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                        <FaTimes className="text-red-500 text-3xl" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-3">
+                        Oops! Something went wrong
+                    </h3>
+                    <p className="text-gray-600 mb-6 leading-relaxed">
+                        We couldn't load the food menu. Please check your
+                        connection and try again.
+                    </p>
+                    <button
+                        onClick={() => window.location.reload()}
+                        className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                    >
+                        🔄 Try Again
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <div className="min-h-screen bg-gray-50 p-6">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 p-4 sm:p-6">
             {/* Header */}
-            <div className="max-w-7xl mx-auto">
-                <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center space-x-4">
-                        <div className="bg-teal-500 p-3 rounded-xl">
-                            <FaUtensils className="text-white text-2xl" />
+            <div className="max-w-7xl mx-auto relative">
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-12 gap-8">
+                    <div className="flex items-center space-x-6">
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-gradient-to-br from-teal-400 to-emerald-600 rounded-3xl blur-md opacity-75"></div>
+                            <div className="relative bg-gradient-to-br from-teal-500 to-emerald-600 p-5 rounded-3xl shadow-2xl">
+                                <FaUtensils className="text-white text-3xl" />
+                            </div>
                         </div>
-                        <div>
-                            <h1 className="text-3xl font-bold text-gray-800">
+                        <div className="flex-1">
+                            <h1 className="text-4xl sm:text-5xl font-black text-gray-900 bg-gradient-to-r from-teal-600 via-emerald-600 to-blue-600 bg-clip-text leading-tight">
                                 Weekly Food Menu
                             </h1>
-                            <p className="text-gray-600">
-                                Select your preferred meals for each day
+                            <p className="text-gray-600 text-lg mt-2 font-medium">
+                                Craft your perfect meal plan with our
+                                chef-curated selections
                             </p>
+                            <div className="flex items-center space-x-4 mt-3">
+                                <div className="flex items-center space-x-2 bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/20">
+                                    <FaUser className="text-teal-600 text-sm" />
+                                    <span className="text-sm font-semibold text-gray-700">
+                                        {currentUser?.name || "Guest"}
+                                    </span>
+                                </div>
+                                <div className="flex items-center space-x-2 bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/20">
+                                    <FaBolt className="text-amber-500 text-sm" />
+                                    <span className="text-sm font-semibold text-gray-700">
+                                        {totalWeeklyCalories} weekly calories
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="text-right">
-                        <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-lg shadow-sm">
-                            <FaCalendarAlt className="text-teal-500" />
-                            <span className="font-semibold text-gray-700">
-                                {selectedDay}
-                            </span>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <div className="flex items-center space-x-4 bg-white/70 backdrop-blur-lg px-6 py-4 rounded-2xl shadow-xl border border-white/30">
+                            <div className="bg-gradient-to-br from-teal-400 to-emerald-500 p-3 rounded-xl shadow-lg">
+                                <FaCalendarAlt className="text-white text-xl" />
+                            </div>
+                            <div>
+                                <p className="text-sm text-gray-500 font-semibold uppercase tracking-wide">
+                                    Selected Day
+                                </p>
+                                <p className="font-bold text-gray-800 text-lg">
+                                    {selectedDay}
+                                    {currentDayInfo && (
+                                        <span className="text-teal-600 ml-2">
+                                            • {currentDayInfo.date}
+                                        </span>
+                                    )}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Day Selector */}
-                <div className="flex space-x-2 mb-8 overflow-x-auto pb-2">
-                    {foodMenuData.map((dayData) => (
-                        <button
-                            key={dayData.day}
-                            onClick={() => setSelectedDay(dayData.day)}
-                            className={`flex-1 min-w-[120px] px-4 py-3 rounded-xl font-semibold transition-all duration-200 ${
-                                selectedDay === dayData.day
-                                    ? "bg-teal-500 text-white shadow-lg transform scale-105"
-                                    : "bg-white text-gray-700 hover:bg-teal-50 hover:text-teal-600"
-                            }`}
-                        >
-                            {dayData.day}
-                            <div className="text-sm font-normal mt-1 opacity-80">
-                                {calculateTotalCalories(dayData.day)} cal
-                            </div>
-                        </button>
-                    ))}
+                <div className="flex space-x-4 justify-center mb-12 overflow-x-auto py-4 px-2">
+                    {weekDays.map((dayInfo, index) => {
+                        const totalCalories = calculateTotalCalories(
+                            dayInfo.day
+                        );
+                        const isSelected = selectedDay === dayInfo.day;
+                        const isToday = index === 0;
+
+                        return (
+                            <button
+                                key={dayInfo.day}
+                                onClick={() => setSelectedDay(dayInfo.day)}
+                                className={`flex-shrink-0 min-w-[140px] px-6 py-5 rounded-2xl font-bold transition-all duration-500 border-2 relative overflow-hidden group ${
+                                    isSelected
+                                        ? "bg-gradient-to-br from-teal-500 to-emerald-600 text-white transform scale-105 border-teal-500"
+                                        : "bg-white/70 text-gray-700 hover:bg-white border-white/50 hover:border-teal-200"
+                                }`}
+                            >
+                                {isToday && (
+                                    <div className="absolute top-1 right-1 bg-amber-500 text-white text-xs px-2 py-1 rounded-full z-1">
+                                        TODAY
+                                    </div>
+                                )}
+                                <div className="relative z-10">
+                                    <div className="text-lg font-black mb-1">
+                                        {dayInfo.day.substring(0, 3)}
+                                    </div>
+                                    <div className="text-sm font-semibold opacity-90 mb-2">
+                                        {dayInfo.date}
+                                    </div>
+                                    <div
+                                        className={`text-sm font-bold px-3 py-1.5 rounded-full transition-all duration-300 ${
+                                            isSelected
+                                                ? "bg-white/20 backdrop-blur-sm"
+                                                : totalCalories > 0
+                                                ? "bg-gradient-to-r from-teal-100 to-emerald-100 text-teal-700 shadow-inner"
+                                                : "bg-gray-200 text-gray-600"
+                                        }`}
+                                    >
+                                        {totalCalories || 0} cal
+                                    </div>
+                                </div>
+                            </button>
+                        );
+                    })}
+                </div>
+
+                {/* Meal Type Filter */}
+                <div className="flex space-x-3 overflow-x-auto p-2">
+                    {["all", "breakfast", "lunch", "snacks", "dinner"].map(
+                        (type) => (
+                            <button
+                                key={type}
+                                onClick={() => setActiveMealType(type)}
+                                className={`flex-shrink-0 px-6 py-3 rounded-xl font-bold transition-all duration-300 backdrop-blur-sm ${
+                                    activeMealType === type
+                                        ? `bg-gradient-to-r ${getMealTypeColor(
+                                              type
+                                          )} text-white shadow-lg transform scale-105 border-transparent`
+                                        : "bg-white/70 text-gray-600 hover:bg-white hover:shadow-md border-white/50"
+                                }`}
+                            >
+                                {type === "all"
+                                    ? "🍱 All Meals"
+                                    : `${getMealTypeIcon(
+                                          type
+                                      )} ${getMealTypeName(type)}`}
+                            </button>
+                        )
+                    )}
                 </div>
 
                 {/* Food Selection Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
                     {/* Available Meals */}
-                    <div className="space-y-6">
-                        <h2 className="text-xl font-bold text-gray-800 flex items-center">
-                            <FaUtensils className="mr-2 text-teal-500" />
-                            Available Meals for {selectedDay}
-                        </h2>
+                    <div className="bg-white/70 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/30 p-8">
+                        <div className="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 className="text-3xl font-black text-gray-900 flex items-center mb-2">
+                                    <FaUtensils className="mr-4 text-teal-500" />
+                                    Available Meals
+                                </h2>
+                                <p className="text-gray-600 text-lg font-medium">
+                                    For {selectedDay}
+                                    {currentDayInfo && (
+                                        <span className="text-teal-600 font-semibold">
+                                            {" "}
+                                            • {currentDayInfo.date}
+                                        </span>
+                                    )}
+                                </p>
+                            </div>
+                        </div>
 
-                        {currentDayData &&
-                            Object.entries(currentDayData.meals).map(
-                                ([mealType, foods]) => (
-                                    <div
-                                        key={mealType}
-                                        className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
-                                    >
-                                        <h3 className="text-lg font-semibold text-gray-800 mb-4 capitalize">
-                                            {getMealTypeName(mealType)}
-                                        </h3>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            {foods.map((food) => (
-                                                <div
-                                                    key={food.id}
-                                                    className={`border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 ${
-                                                        selectedMeals[
-                                                            selectedDay
-                                                        ]?.[mealType]?.id ===
-                                                        food.id
-                                                            ? "border-teal-500 bg-teal-50 transform scale-105"
-                                                            : "border-gray-200 hover:border-teal-300 hover:bg-gray-50"
-                                                    } ${
-                                                        !food.isAvailable
-                                                            ? "opacity-50 cursor-not-allowed"
-                                                            : ""
-                                                    }`}
-                                                    onClick={() =>
-                                                        food.isAvailable &&
-                                                        handleMealSelect(
-                                                            mealType,
-                                                            food
-                                                        )
-                                                    }
-                                                >
-                                                    <div className="flex space-x-4">
-                                                        <img
-                                                            src={food.image}
-                                                            alt={food.name}
-                                                            className="w-16 h-16 rounded-lg object-cover"
-                                                        />
-                                                        <div className="flex-1">
-                                                            <h4 className="font-semibold text-gray-800">
-                                                                {food.name}
-                                                            </h4>
-                                                            <div className="flex items-center space-x-2 mt-1">
-                                                                <FaFire className="text-orange-500 text-sm" />
-                                                                <span className="text-sm text-gray-600">
-                                                                    {
-                                                                        food.calories
-                                                                    }{" "}
-                                                                    calories
-                                                                </span>
+                        {currentDayData ? (
+                            <div className="space-y-8">
+                                {Object.entries(currentDayData.meals)
+                                    .filter(
+                                        ([mealType]) =>
+                                            activeMealType === "all" ||
+                                            activeMealType === mealType
+                                    )
+                                    .map(([mealType, foods]) => (
+                                        <div
+                                            key={mealType}
+                                            className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-100/50 p-6"
+                                        >
+                                            <div className="flex items-center justify-between mb-6">
+                                                <h3 className="text-xl font-black text-gray-800 capitalize flex items-center">
+                                                    <span className="text-2xl mr-3">
+                                                        {getMealTypeIcon(
+                                                            mealType
+                                                        )}
+                                                    </span>
+                                                    {getMealTypeName(mealType)}
+                                                    <span className="ml-3 bg-gradient-to-r from-teal-600 to-emerald-700 text-white text-sm px-3 py-1 rounded-full">
+                                                        {
+                                                            foods.filter(
+                                                                (f) =>
+                                                                    f.isAvailable
+                                                            ).length
+                                                        }{" "}
+                                                        options
+                                                    </span>
+                                                </h3>
+                                            </div>
+                                            <div className="grid grid-cols-1 gap-4">
+                                                {foods.map((food) => (
+                                                    <div
+                                                        key={food.id}
+                                                        className={`group border-2 rounded-2xl p-5 cursor-pointer transition-all duration-500 backdrop-blur-sm ${
+                                                            selectedMeals[
+                                                                selectedDay
+                                                            ]?.[mealType]
+                                                                ?.id === food.id
+                                                                ? `border-teal-500 bg-gradient-to-r from-teal-50 to-emerald-50 shadow-xl transform scale-105`
+                                                                : "border-gray-200/50 hover:border-teal-300 hover:bg-white/90 hover:shadow-xl"
+                                                        } ${
+                                                            !food.isAvailable
+                                                                ? "opacity-60 cursor-not-allowed grayscale"
+                                                                : ""
+                                                        }`}
+                                                        onClick={() =>
+                                                            handleMealSelect(
+                                                                mealType,
+                                                                food
+                                                            )
+                                                        }
+                                                    >
+                                                        <div className="flex space-x-5">
+                                                            <div className="relative flex-shrink-0">
+                                                                <div className="absolute -inset-2 bg-gradient-to-r from-teal-400 to-emerald-500 rounded-2xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
+                                                                <img
+                                                                    src={
+                                                                        food.image
+                                                                    }
+                                                                    alt={
+                                                                        food.name
+                                                                    }
+                                                                    className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover shadow-lg z-10"
+                                                                />
                                                             </div>
-                                                            {!food.isAvailable && (
-                                                                <span className="text-xs text-red-500 mt-1">
-                                                                    Not
-                                                                    Available
-                                                                </span>
+                                                            <div className="flex-1 min-w-0">
+                                                                <div className="flex items-start justify-between mb-3">
+                                                                    <h4 className="font-black text-gray-900 text-lg group-hover:text-teal-700 transition-colors line-clamp-2 leading-tight">
+                                                                        {
+                                                                            food.name
+                                                                        }
+                                                                    </h4>
+                                                                </div>
+                                                                <div className="flex items-center space-x-3 mb-3">
+                                                                    <div className="flex items-center space-x-2 bg-gradient-to-r from-orange-100 to-amber-100 px-3 py-1.5 rounded-full border border-orange-200">
+                                                                        <FaFire className="text-orange-500" />
+                                                                        <span className="text-sm font-black text-orange-700">
+                                                                            {
+                                                                                food.calories
+                                                                            }{" "}
+                                                                            calories
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                {!food.isAvailable && (
+                                                                    <div className="flex items-center space-x-2 mt-3">
+                                                                        <div className="bg-red-100 border border-red-200 px-3 py-1.5 rounded-full">
+                                                                            <span className="text-xs font-black text-red-700 flex items-center">
+                                                                                🔴
+                                                                                Currently
+                                                                                Unavailable
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                            {selectedMeals[
+                                                                selectedDay
+                                                            ]?.[mealType]
+                                                                ?.id ===
+                                                                food.id && (
+                                                                <div className="flex-shrink-0">
+                                                                    <div className="bg-gradient-to-r from-teal-500 to-emerald-600 text-white p-3 rounded-full shadow-lg">
+                                                                        <FaCheck className="text-lg" />
+                                                                    </div>
+                                                                </div>
                                                             )}
                                                         </div>
-                                                        {selectedMeals[
-                                                            selectedDay
-                                                        ]?.[mealType]?.id ===
-                                                            food.id && (
-                                                            <div className="text-teal-500">
-                                                                <FaCheck className="text-xl" />
-                                                            </div>
-                                                        )}
                                                     </div>
-                                                </div>
-                                            ))}
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            )}
+                                    ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-16">
+                                <div className="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                                    <FaUtensils className="text-gray-400 text-3xl" />
+                                </div>
+                                <h3 className="text-2xl font-black text-gray-600 mb-3">
+                                    No meals available
+                                </h3>
+                                <p className="text-gray-500 text-lg">
+                                    Our chefs are preparing something special.
+                                    Check back soon!
+                                </p>
+                            </div>
+                        )}
                     </div>
 
                     {/* Selected Meals Summary */}
-                    <div className="space-y-6">
-                        <h2 className="text-xl font-bold text-gray-800">
-                            Your Selections
-                        </h2>
-
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-6">
-                            <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-lg font-semibold text-gray-800">
-                                    {selectedDay}'s Meals
-                                </h3>
-                                <div className="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm font-semibold">
-                                    Total: {calculateTotalCalories(selectedDay)}{" "}
-                                    cal
-                                </div>
+                    <div className="bg-white/70 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/30 p-8">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+                            <div>
+                                <h2 className="text-3xl font-black text-gray-900 mb-2">
+                                    Your Selections
+                                </h2>
+                                <p className="text-gray-600 text-lg font-medium">
+                                    {selectedDay}
+                                    {currentDayInfo && (
+                                        <span className="text-teal-600 font-semibold">
+                                            {" "}
+                                            • {currentDayInfo.date}
+                                        </span>
+                                    )}
+                                </p>
                             </div>
+                            <div className="bg-gradient-to-r from-teal-600 to-emerald-700 text-white px-6 py-3 rounded-full text-lg font-black shadow-2xl flex items-center gap-1">
+                                <FaFire className="text-orange-600 text-xl" />
+                                {calculateTotalCalories(selectedDay)} Total
+                                Calories
+                            </div>
+                        </div>
 
-                            <div className="space-y-4">
-                                {Object.entries(
-                                    selectedMeals[selectedDay] || {}
-                                ).map(([mealType, selectedFood]) => (
+                        <div className="space-y-6 mb-8">
+                            {Object.entries(selectedMeals[selectedDay] || {})
+                                .filter(
+                                    ([mealType]) =>
+                                        !["date", "displayDate"].includes(
+                                            mealType
+                                        )
+                                )
+                                .map(([mealType, selectedFood]) => (
                                     <div
                                         key={mealType}
-                                        className="border border-gray-200 rounded-lg p-4"
+                                        className={`border-2 rounded-2xl p-6 transition-all duration-500 backdrop-blur-sm ${
+                                            selectedFood
+                                                ? "border-teal-300 bg-gradient-to-r from-teal-50/80 to-emerald-50/80 shadow-lg"
+                                                : "border-dashed border-gray-300/50 bg-gray-50/50"
+                                        }`}
                                     >
-                                        <div className="flex items-center justify-between mb-2">
-                                            <h4 className="font-semibold text-gray-700 capitalize">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <h4 className="font-black text-gray-800 capitalize text-lg flex items-center">
+                                                <span className="text-xl mr-3">
+                                                    {getMealTypeIcon(mealType)}
+                                                </span>
                                                 {getMealTypeName(mealType)}
                                             </h4>
                                             {selectedFood && (
@@ -544,94 +595,75 @@ const UserFoodMenu = () => {
                                                             mealType
                                                         )
                                                     }
-                                                    className="text-red-500 hover:text-red-700 transition-colors"
+                                                    className="text-red-400 hover:text-red-600 hover:bg-red-50 transition-all duration-300 p-2 rounded-xl transform hover:scale-110"
+                                                    aria-label={`Remove ${selectedFood.name}`}
                                                 >
-                                                    <FaTimes />
+                                                    <FaTimes className="text-lg" />
                                                 </button>
                                             )}
                                         </div>
 
                                         {selectedFood ? (
-                                            <div className="flex items-center space-x-3">
+                                            <div className="flex items-center space-x-5">
                                                 <img
                                                     src={selectedFood.image}
                                                     alt={selectedFood.name}
-                                                    className="w-12 h-12 rounded-lg object-cover"
+                                                    className="w-16 h-16 rounded-xl object-cover shadow-lg flex-shrink-0"
                                                 />
-                                                <div>
-                                                    <p className="font-medium text-gray-800">
+                                                <div className="min-w-0 flex-1">
+                                                    <p className="font-black text-gray-900 text-lg mb-2">
                                                         {selectedFood.name}
                                                     </p>
-                                                    <p className="text-sm text-gray-600 flex items-center">
-                                                        <FaFire className="text-orange-500 mr-1" />
-                                                        {selectedFood.calories}{" "}
-                                                        cal
-                                                    </p>
+                                                    <div className="flex items-center space-x-4">
+                                                        <p className="text-sm text-gray-700 flex items-center bg-orange-100 px-3 py-1.5 rounded-full border border-orange-200">
+                                                            <FaFire className="text-orange-500 mr-2" />
+                                                            {
+                                                                selectedFood.calories
+                                                            }{" "}
+                                                            cal
+                                                        </p>
+                                                        <p className="text-sm text-teal-700 bg-teal-100 px-3 py-1.5 rounded-full border border-teal-200">
+                                                            📅{" "}
+                                                            {
+                                                                selectedFood.selectedDisplayDate
+                                                            }
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         ) : (
-                                            <p className="text-gray-500 text-sm italic">
-                                                No selection made
-                                            </p>
+                                            <div className="text-center py-6">
+                                                <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-3">
+                                                    <FaUtensils className="text-gray-400" />
+                                                </div>
+                                                <p className="text-gray-400 text-sm font-semibold italic">
+                                                    No selection yet
+                                                </p>
+                                                <p className="text-gray-400 text-xs mt-1">
+                                                    Click on a meal to add it to
+                                                    your plan
+                                                </p>
+                                            </div>
                                         )}
                                     </div>
                                 ))}
-                            </div>
-
-                            <button
-                                onClick={handleSubmitSelections}
-                                disabled={
-                                    calculateTotalCalories(selectedDay) === 0
-                                }
-                                className="w-full mt-6 bg-teal-500 hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100"
-                            >
-                                Confirm Selections for {selectedDay}
-                            </button>
                         </div>
 
-                        {/* Weekly Summary */}
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                                Weekly Summary
-                            </h3>
-                            <div className="space-y-3">
-                                {foodMenuData.map((dayData) => (
-                                    <div
-                                        key={dayData.day}
-                                        className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0"
-                                    >
-                                        <span
-                                            className={`font-medium ${
-                                                selectedDay === dayData.day
-                                                    ? "text-teal-600"
-                                                    : "text-gray-700"
-                                            }`}
-                                        >
-                                            {dayData.day}
-                                        </span>
-                                        <span className="text-gray-600">
-                                            {calculateTotalCalories(
-                                                dayData.day
-                                            )}{" "}
-                                            cal
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                        <button
+                            onClick={handleSubmitSelections}
+                            disabled={calculateTotalCalories(selectedDay) === 0}
+                            className="w-full bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed text-white font-black text-lg py-5 px-8 rounded-2xl transition-all duration-500 transform hover:scale-105 disabled:hover:scale-100 shadow-2xl hover:shadow-3xl disabled:shadow-none relative overflow-hidden cursor-pointer group"
+                        >
+                            <span className="relative z-10 flex items-center justify-center space-x-3">
+                                <FaCheck className="text-xl" />
+                                <span>
+                                    Confirm Selections for {selectedDay}
+                                </span>
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
-
-            {/* Confirmation Toast */}
-            {showConfirmation && (
-                <div className="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300">
-                    <div className="flex items-center space-x-2">
-                        <FaCheck />
-                        <span>Meal selections saved successfully!</span>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

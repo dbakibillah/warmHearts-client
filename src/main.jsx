@@ -2,7 +2,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 import "./index.css";
-
 import Dashboard from "./dashboard/Dashboard";
 import DashboardHome from "./dashboard/member/DashboardHome";
 import AboutUs from "./pages/about/AboutUs";

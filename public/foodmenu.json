@@ -1,5 +1,6 @@
 [
     {
+        "_id": "68e40bc76c282f0b2d82b631",
         "day": "Sunday",
         "meals": {
             "breakfast": [
@@ -97,6 +98,105 @@
         }
     },
     {
+        "_id": "68e40bc76c282f0b2d82b637",
+        "day": "Saturday",
+        "meals": {
+            "breakfast": [
+                {
+                    "id": 73,
+                    "name": "নান ও কাবাব",
+                    "calories": 420,
+                    "image": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 74,
+                    "name": "উপমা",
+                    "calories": 280,
+                    "image": "https://images.unsplash.com/photo-1595504285364-00164008e351?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 75,
+                    "name": "স্যান্ডউইচ ও জুস",
+                    "calories": 320,
+                    "image": "https://images.unsplash.com/photo-1539252554453-80ab65ce3586?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "lunch": [
+                {
+                    "id": 76,
+                    "name": "ভাত, চিকেন কারি",
+                    "calories": 560,
+                    "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 77,
+                    "name": "তেহারি",
+                    "calories": 480,
+                    "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 78,
+                    "name": "ভাত, ডাল ও সবজি ভাজি",
+                    "calories": 440,
+                    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "snacks": [
+                {
+                    "id": 79,
+                    "name": "চটপটি",
+                    "calories": 200,
+                    "image": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 80,
+                    "name": "কেক ও কফি",
+                    "calories": 240,
+                    "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 81,
+                    "name": "আচার ও মুড়ি",
+                    "calories": 170,
+                    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "dinner": [
+                {
+                    "id": 82,
+                    "name": "রুটি ও মটন কারি",
+                    "calories": 520,
+                    "image": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 83,
+                    "name": "ফিশ ফ্রাই ও সালাদ",
+                    "calories": 460,
+                    "image": "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 84,
+                    "name": "ভেজিটেবল নুডলস",
+                    "calories": 380,
+                    "image": "https://images.unsplash.com/photo-1585032221-972c2a087151?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ]
+        }
+    },
+    {
+        "_id": "68e40bc76c282f0b2d82b632",
         "day": "Monday",
         "meals": {
             "breakfast": [
@@ -194,28 +294,127 @@
         }
     },
     {
+        "_id": "68e40bc76c282f0b2d82b636",
+        "day": "Friday",
+        "meals": {
+            "breakfast": [
+                {
+                    "id": 61,
+                    "name": "হালিম",
+                    "calories": 450,
+                    "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 62,
+                    "name": "ডোসা",
+                    "calories": 320,
+                    "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 63,
+                    "name": "প্যানকেক ও মেপল সিরাপ",
+                    "calories": 380,
+                    "image": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "lunch": [
+                {
+                    "id": 64,
+                    "name": "ভাত, কাতলা মাছের ঝোল",
+                    "calories": 540,
+                    "image": "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 65,
+                    "name": "বিরিয়ানি ও বোরহানি",
+                    "calories": 600,
+                    "image": "https://images.unsplash.com/photo-1563379091339-03246963d96c?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 66,
+                    "name": "ভাত, ডাল ও মাছ ভাজা",
+                    "calories": 500,
+                    "image": "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "snacks": [
+                {
+                    "id": 67,
+                    "name": "জিলাপি",
+                    "calories": 280,
+                    "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 68,
+                    "name": "বুট ও চা",
+                    "calories": 190,
+                    "image": "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 69,
+                    "name": "ফ্রুট সালাদ",
+                    "calories": 150,
+                    "image": "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "dinner": [
+                {
+                    "id": 70,
+                    "name": "পরোটা ও কাবাব",
+                    "calories": 480,
+                    "image": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 71,
+                    "name": "ফ্রাইড চিকেন ও ভাত",
+                    "calories": 520,
+                    "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 72,
+                    "name": "সবজি পোলাও",
+                    "calories": 420,
+                    "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ]
+        }
+    },
+    {
+        "_id": "68e40bc76c282f0b2d82b633",
         "day": "Tuesday",
         "meals": {
             "breakfast": [
                 {
                     "id": 25,
-                    "name": "রুটি ও সবজি",
-                    "calories": 330,
-                    "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
+                    "name": "পাউরুটি ও ডিম",
+                    "calories": 350,
+                    "image": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&h=300&fit=crop",
                     "isAvailable": true
                 },
                 {
                     "id": 26,
-                    "name": "চা ও কলা",
-                    "calories": 150,
-                    "image": "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&h=300&fit=crop",
+                    "name": "সেমাই",
+                    "calories": 280,
+                    "image": "https://images.unsplash.com/photo-1595504285364-00164008e351?w=400&h=300&fit=crop",
                     "isAvailable": true
                 },
                 {
                     "id": 27,
-                    "name": "চিড়া দই আপেল",
-                    "calories": 290,
-                    "image": "https://images.unsplash.com/photo-1568901343683-35d4f5f84c07?w=400&h=300&fit=crop",
+                    "name": "দলিয়া ও কলা",
+                    "calories": 220,
+                    "image": "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=400&h=300&fit=crop",
                     "isAvailable": true
                 }
             ],
@@ -282,6 +481,202 @@
                 },
                 {
                     "id": 36,
+                    "name": "সবজি ও রুটি",
+                    "calories": 320,
+                    "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ]
+        }
+    },
+    {
+        "_id": "68e40bc76c282f0b2d82b634",
+        "day": "Wednesday",
+        "meals": {
+            "breakfast": [
+                {
+                    "id": 37,
+                    "name": "খিচুড়ি",
+                    "calories": 380,
+                    "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 38,
+                    "name": "ডিম ভাজি ও পরোটা",
+                    "calories": 420,
+                    "image": "https://images.unsplash.com/photo-1630918655889-2485835f6daa?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 39,
+                    "name": "ওটমিল ও ফল",
+                    "calories": 280,
+                    "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "lunch": [
+                {
+                    "id": 40,
+                    "name": "ভাত, চিংড়ি মালাইকারি",
+                    "calories": 580,
+                    "image": "https://images.unsplash.com/photo-1559847844-5315695dadae?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 41,
+                    "name": "পোলাও ও রেজালা",
+                    "calories": 520,
+                    "image": "https://images.unsplash.com/photo-1563379091339-03246963d96c?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 42,
+                    "name": "ভাত, ডাল ও সবজি",
+                    "calories": 450,
+                    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "snacks": [
+                {
+                    "id": 43,
+                    "name": "বেগুনি ও চা",
+                    "calories": 240,
+                    "image": "https://images.unsplash.com/photo-1563720223185-11003d516935?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 44,
+                    "name": "স্যান্ডউইচ",
+                    "calories": 280,
+                    "image": "https://images.unsplash.com/photo-1539252554453-80ab65ce3586?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 45,
+                    "name": "লাচ্ছা সেমাই",
+                    "calories": 200,
+                    "image": "https://images.unsplash.com/photo-1595504285364-00164008e351?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "dinner": [
+                {
+                    "id": 46,
+                    "name": "রুটি ও সবজি",
+                    "calories": 340,
+                    "image": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 47,
+                    "name": "ফ্রাইড রাইস",
+                    "calories": 480,
+                    "image": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 48,
+                    "name": "মুরগি রোস্ট",
+                    "calories": 520,
+                    "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ]
+        }
+    },
+    {
+        "_id": "68e40bc76c282f0b2d82b635",
+        "day": "Thursday",
+        "meals": {
+            "breakfast": [
+                {
+                    "id": 49,
+                    "name": "ইডলি ও সেম্বার",
+                    "calories": 320,
+                    "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 50,
+                    "name": "পরোটা ও সবজি",
+                    "calories": 380,
+                    "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 51,
+                    "name": "কর্নফ্লেক্স ও দুধ",
+                    "calories": 260,
+                    "image": "https://images.unsplash.com/photo-1627485937980-221c6ab67d6f?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "lunch": [
+                {
+                    "id": 52,
+                    "name": "ভাত, ইলিশ ভাজা ও ডাল",
+                    "calories": 560,
+                    "image": "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 53,
+                    "name": "মটন রেজালা",
+                    "calories": 620,
+                    "image": "https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 54,
+                    "name": "ভাত, ডিম কারি",
+                    "calories": 480,
+                    "image": "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "snacks": [
+                {
+                    "id": 55,
+                    "name": "রোল ও চা",
+                    "calories": 220,
+                    "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 56,
+                    "name": "চিপস ও জুস",
+                    "calories": 180,
+                    "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 57,
+                    "name": "মুড়ি ও নারকেল",
+                    "calories": 160,
+                    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                }
+            ],
+            "dinner": [
+                {
+                    "id": 58,
+                    "name": "লুচি ও আলুর দম",
+                    "calories": 440,
+                    "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 59,
+                    "name": "খিচুড়ি ও ভুনা খিচুরি",
+                    "calories": 400,
+                    "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&h=300&fit=crop",
+                    "isAvailable": true
+                },
+                {
+                    "id": 60,
                     "name": "সবজি ও রুটি",
                     "calories": 320,
                     "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",

@@ -1,54 +1,60 @@
-{
-  "userId": "U001",
-  "userName": "আব্দুল করিম",
-  "age": 68,
-  "medicalCondition": ["ডায়াবেটিস", "উচ্চ রক্তচাপ"],
-  "date": "2025-10-06",
-  "medicines": [
-    {
-      "id": 1,
-      "name": "Metformin 500mg",
-      "type": "ট্যাবলেট",
-      "time": "সকাল ৮:০০",
-      "dose": "১ ট্যাবলেট",
-      "notes": "নাশতার পর",
-      "image": "https://example.com/metformin.jpg",
-      "duration": {
-        "totalDays": 30,
-        "remainingDays": 12,
-        "endDate": "2025-10-18"
+[
+  {
+    "userId": "U001",
+    "userName": "আব্দুল করিম",
+    "age": 68,
+    "userEmail": "asiif32ahamed@gmail.com",
+    "medicalCondition": [
+      "ডায়াবেটিস",
+      "উচ্চ রক্তচাপ"
+    ],
+    "date": "2025-10-06",
+    "medicines": [
+      {
+        "id": 1,
+        "name": "Metformin 500mg",
+        "type": "ট্যাবলেট",
+        "time": "সকাল ৮:০০",
+        "dose": "১ ট্যাবলেট",
+        "notes": "নাশতার পর",
+        "image": "https://example.com/metformin.jpg",
+        "duration": {
+          "totalDays": 30,
+          "remainingDays": 12,
+          "endDate": "2025-10-18"
+        },
+        "status": "pending"
       },
-      "status": "pending"
-    },
-    {
-      "id": 2,
-      "name": "Insulin (NovoRapid)",
-      "type": "ইনসুলিন ইনজেকশন",
-      "time": "দুপুর ১:০০",
-      "dose": "৮ ইউনিট",
-      "notes": "লাঞ্চের আগে",
-      "image": "https://example.com/insulin.jpg",
-      "duration": {
-        "totalDays": 90,
-        "remainingDays": 56,
-        "endDate": "2025-12-01"
+      {
+        "id": 2,
+        "name": "Insulin (NovoRapid)",
+        "type": "ইনসুলিন ইনজেকশন",
+        "time": "দুপুর ১:০০",
+        "dose": "৮ ইউনিট",
+        "notes": "লাঞ্চের আগে",
+        "image": "https://example.com/insulin.jpg",
+        "duration": {
+          "totalDays": 90,
+          "remainingDays": 56,
+          "endDate": "2025-12-01"
+        },
+        "status": "pending"
       },
-      "status": "pending"
-    },
-    {
-      "id": 3,
-      "name": "Amlodipine 5mg",
-      "type": "ট্যাবলেট",
-      "time": "রাত ৯:০০",
-      "dose": "১ ট্যাবলেট",
-      "notes": "ঘুমানোর আগে",
-      "image": "https://example.com/amlodipine.jpg",
-      "duration": {
-        "totalDays": 60,
-        "remainingDays": 45,
-        "endDate": "2025-11-20"
-      },
-      "status": "taken"
-    }
-  ]
-}
+      {
+        "id": 3,
+        "name": "Amlodipine 5mg",
+        "type": "ট্যাবলেট",
+        "time": "রাত ৯:০০",
+        "dose": "১ ট্যাবলেট",
+        "notes": "ঘুমানোর আগে",
+        "image": "https://example.com/amlodipine.jpg",
+        "duration": {
+          "totalDays": 60,
+          "remainingDays": 45,
+          "endDate": "2025-11-20"
+        },
+        "status": "taken"
+      }
+    ]
+  }
+]

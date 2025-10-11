@@ -1,10 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import {
     FaBolt,
     FaCalendarAlt,
     FaCheck,
     FaFire,
+    FaSave,
     FaTimes,
     FaUser,
     FaUtensils,
@@ -23,6 +24,7 @@ const UserFoodMenu = () => {
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
     const { currentUser } = useUserData();
+    const queryClient = useQueryClient();
 
     const generateWeekDays = () => {
         const days = [
@@ -76,9 +78,77 @@ const UserFoodMenu = () => {
         },
     });
 
-    // Initialize selected meals when data loads
+    const { data: existingSelections = [] } = useQuery({
+        queryKey: ["userSelections", currentUser?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(
+                `/selectedFoodMenu?email=${currentUser?.email}`
+            );
+            return res.data;
+        },
+        enabled: !!currentUser?.email,
+    });
+
+    // Mutation for saving selections
+    const saveSelectionsMutation = useMutation({
+        mutationFn: async (submissionData) => {
+            if (existingSelections.length > 0) {
+                return await axiosSecure.patch(
+                    `/selectedFoodMenu/${existingSelections[0]._id}`,
+                    submissionData
+                );
+            } else {
+                return await axiosSecure.post(
+                    "/selectedFoodMenu",
+                    submissionData
+                );
+            }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(["userSelections"]);
+            toast.success("✅ Meal selections saved successfully! 🎉");
+        },
+        onError: (error) => {
+            console.error("Save error:", error);
+            toast.error("❌ Failed to save selections. Please try again.");
+        },
+    });
+
+    // Initialize selected meals with existing selections
     useEffect(() => {
-        if (weekDays.length > 0) {
+        if (weekDays.length > 0 && existingSelections.length > 0) {
+            const initialSelections = {};
+
+            weekDays.forEach((dayInfo) => {
+                const existingDaySelection =
+                    existingSelections[0]?.selections?.[dayInfo.day];
+
+                if (existingDaySelection) {
+                    // Use existing selections for this day
+                    initialSelections[dayInfo.day] = {
+                        breakfast: existingDaySelection.meals.breakfast,
+                        lunch: existingDaySelection.meals.lunch,
+                        snacks: existingDaySelection.meals.snacks,
+                        dinner: existingDaySelection.meals.dinner,
+                        date: dayInfo.fullDate,
+                        displayDate: dayInfo.date,
+                    };
+                } else {
+                    // Initialize empty for this day
+                    initialSelections[dayInfo.day] = {
+                        breakfast: null,
+                        lunch: null,
+                        snacks: null,
+                        dinner: null,
+                        date: dayInfo.fullDate,
+                        displayDate: dayInfo.date,
+                    };
+                }
+            });
+
+            setSelectedMeals(initialSelections);
+        } else if (weekDays.length > 0) {
+            // Initialize empty selections if no existing data
             const initialSelections = {};
             weekDays.forEach((dayInfo) => {
                 initialSelections[dayInfo.day] = {
@@ -92,11 +162,49 @@ const UserFoodMenu = () => {
             });
             setSelectedMeals(initialSelections);
         }
-    }, [weekDays]);
+    }, [weekDays, existingSelections]);
+
+    // Check if a food is already selected in any day
+    const isFoodAlreadySelected = (foodId) => {
+        if (!existingSelections.length) return false;
+
+        const selections = existingSelections[0]?.selections;
+        if (!selections) return false;
+
+        // Check all days and all meal types for this food ID
+        for (const day of Object.values(selections)) {
+            for (const meal of Object.values(day.meals)) {
+                if (meal && meal.id === foodId) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+    // Check if a food is selected for the current day in current session
+    const isFoodSelectedForCurrentDay = (foodId, mealType) => {
+        const currentSelection = selectedMeals[selectedDay];
+        return currentSelection?.[mealType]?.id === foodId;
+    };
 
     const handleMealSelect = (mealType, foodItem) => {
         if (!foodItem.isAvailable) {
             toast.warning(`${foodItem.name} is currently unavailable`);
+            return;
+        }
+
+        // Check if food is already selected in existing data (not current session)
+        const existingSelection = isFoodAlreadySelected(foodItem.id);
+        const currentSelection = isFoodSelectedForCurrentDay(
+            foodItem.id,
+            mealType
+        );
+
+        if (existingSelection && !currentSelection) {
+            toast.warning(
+                `${foodItem.name} is already selected for another day`
+            );
             return;
         }
 
@@ -201,18 +309,12 @@ const UserFoodMenu = () => {
             };
         });
 
-        axiosSecure.post("/selectedFoodMenu", submissionData);
-
-        toast.promise(
-            new Promise((resolve) => {
-                setTimeout(resolve, 1500);
-            }),
-            {
-                pending: "🚀 Saving your meal selections...",
-                success: "✅ Meal selections saved successfully! 🎉",
-                error: "❌ Failed to save selections. Please try again.",
-            }
-        );
+        // Show loading state
+        toast.promise(saveSelectionsMutation.mutateAsync(submissionData), {
+            pending: "🚀 Saving your meal selections...",
+            success: "✅ Meal selections saved successfully! 🎉",
+            error: "❌ Failed to save selections. Please try again.",
+        });
     };
 
     const currentDayData = foodMenuData.find((day) => day.day === selectedDay);
@@ -222,6 +324,36 @@ const UserFoodMenu = () => {
         (total, day) => total + calculateTotalCalories(day.day),
         0
     );
+
+    // Check if there are any changes to save
+    const hasChanges = () => {
+        if (!existingSelections.length) return true;
+
+        const existing = existingSelections[0];
+        return (
+            JSON.stringify(existing.selections) !==
+            JSON.stringify(
+                Object.entries(selectedMeals).reduce(
+                    (acc, [day, daySelections]) => {
+                        const dayInfo = weekDays.find((d) => d.day === day);
+                        acc[day] = {
+                            date: dayInfo?.fullDate,
+                            displayDate: dayInfo?.date,
+                            meals: {
+                                breakfast: daySelections.breakfast,
+                                lunch: daySelections.lunch,
+                                snacks: daySelections.snacks,
+                                dinner: daySelections.dinner,
+                            },
+                            totalCalories: calculateTotalCalories(day),
+                        };
+                        return acc;
+                    },
+                    {}
+                )
+            )
+        );
+    };
 
     if (isLoading) {
         return <Loading />;
@@ -265,10 +397,10 @@ const UserFoodMenu = () => {
                             </div>
                         </div>
                         <div className="flex-1">
-                            <h1 className="text-4xl sm:text-5xl font-black text-gray-900 bg-gradient-to-r from-teal-600 via-emerald-600 to-blue-600 bg-clip-text leading-tight">
+                            <h1 className="text-4xl font-black text-gray-900 bg-gradient-to-r from-teal-600 via-emerald-600 to-blue-600 bg-clip-text leading-tight">
                                 Weekly Food Menu
                             </h1>
-                            <p className="text-gray-600 text-lg mt-2 font-medium">
+                            <p className="text-gray-600 mt-2 font-medium">
                                 Craft your perfect meal plan with our
                                 chef-curated selections
                             </p>
@@ -439,86 +571,117 @@ const UserFoodMenu = () => {
                                                 </h3>
                                             </div>
                                             <div className="grid grid-cols-1 gap-4">
-                                                {foods.map((food) => (
-                                                    <div
-                                                        key={food.id}
-                                                        className={`group border-2 rounded-2xl p-5 cursor-pointer transition-all duration-500 backdrop-blur-sm ${
-                                                            selectedMeals[
-                                                                selectedDay
-                                                            ]?.[mealType]
-                                                                ?.id === food.id
-                                                                ? `border-teal-500 bg-gradient-to-r from-teal-50 to-emerald-50 shadow-xl transform scale-105`
-                                                                : "border-gray-200/50 hover:border-teal-300 hover:bg-white/90 hover:shadow-xl"
-                                                        } ${
-                                                            !food.isAvailable
-                                                                ? "opacity-60 cursor-not-allowed grayscale"
-                                                                : ""
-                                                        }`}
-                                                        onClick={() =>
-                                                            handleMealSelect(
-                                                                mealType,
-                                                                food
-                                                            )
-                                                        }
-                                                    >
-                                                        <div className="flex space-x-5">
-                                                            <div className="relative flex-shrink-0">
-                                                                <div className="absolute -inset-2 bg-gradient-to-r from-teal-400 to-emerald-500 rounded-2xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-                                                                <img
-                                                                    src={
-                                                                        food.image
-                                                                    }
-                                                                    alt={
-                                                                        food.name
-                                                                    }
-                                                                    className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover shadow-lg z-10"
-                                                                />
-                                                            </div>
-                                                            <div className="flex-1 min-w-0">
-                                                                <div className="flex items-start justify-between mb-3">
-                                                                    <h4 className="font-black text-gray-900 text-lg group-hover:text-teal-700 transition-colors line-clamp-2 leading-tight">
-                                                                        {
+                                                {foods.map((food) => {
+                                                    const isAlreadySelected =
+                                                        isFoodAlreadySelected(
+                                                            food.id
+                                                        );
+                                                    const isSelectedForCurrentDay =
+                                                        isFoodSelectedForCurrentDay(
+                                                            food.id,
+                                                            mealType
+                                                        );
+                                                    const isDisabled =
+                                                        !food.isAvailable ||
+                                                        (isAlreadySelected &&
+                                                            !isSelectedForCurrentDay);
+
+                                                    return (
+                                                        <div
+                                                            key={food.id}
+                                                            className={`group border-2 rounded-2xl p-5 cursor-pointer transition-all duration-500 backdrop-blur-sm ${
+                                                                isSelectedForCurrentDay
+                                                                    ? `border-teal-500 bg-gradient-to-r from-teal-50 to-emerald-50 shadow-xl transform scale-105`
+                                                                    : isDisabled
+                                                                    ? "border-gray-200/50 opacity-60 cursor-not-allowed grayscale"
+                                                                    : "border-gray-200/50 hover:border-teal-300 hover:bg-white/90 hover:shadow-xl"
+                                                            }`}
+                                                            onClick={() =>
+                                                                !isDisabled &&
+                                                                handleMealSelect(
+                                                                    mealType,
+                                                                    food
+                                                                )
+                                                            }
+                                                        >
+                                                            <div className="flex space-x-5">
+                                                                <div className="relative flex-shrink-0">
+                                                                    <div
+                                                                        className={`absolute -inset-2 bg-gradient-to-r from-teal-400 to-emerald-500 rounded-2xl blur-md opacity-0 ${
+                                                                            !isDisabled &&
+                                                                            "group-hover:opacity-50"
+                                                                        } transition-opacity duration-300`}
+                                                                    ></div>
+                                                                    <img
+                                                                        src={
+                                                                            food.image
+                                                                        }
+                                                                        alt={
                                                                             food.name
                                                                         }
-                                                                    </h4>
+                                                                        className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover shadow-lg z-10"
+                                                                    />
                                                                 </div>
-                                                                <div className="flex items-center space-x-3 mb-3">
-                                                                    <div className="flex items-center space-x-2 bg-gradient-to-r from-orange-100 to-amber-100 px-3 py-1.5 rounded-full border border-orange-200">
-                                                                        <FaFire className="text-orange-500" />
-                                                                        <span className="text-sm font-black text-orange-700">
+                                                                <div className="flex-1 min-w-0">
+                                                                    <div className="flex items-start justify-between mb-3">
+                                                                        <h4
+                                                                            className={`font-black text-lg line-clamp-2 leading-tight ${
+                                                                                isSelectedForCurrentDay
+                                                                                    ? "text-teal-700"
+                                                                                    : isDisabled
+                                                                                    ? "text-gray-500"
+                                                                                    : "text-gray-900 group-hover:text-teal-700"
+                                                                            } transition-colors`}
+                                                                        >
                                                                             {
-                                                                                food.calories
-                                                                            }{" "}
-                                                                            calories
-                                                                        </span>
+                                                                                food.name
+                                                                            }
+                                                                        </h4>
                                                                     </div>
-                                                                </div>
-                                                                {!food.isAvailable && (
-                                                                    <div className="flex items-center space-x-2 mt-3">
-                                                                        <div className="bg-red-100 border border-red-200 px-3 py-1.5 rounded-full">
-                                                                            <span className="text-xs font-black text-red-700 flex items-center">
-                                                                                🔴
-                                                                                Currently
-                                                                                Unavailable
+                                                                    <div className="flex items-center space-x-3 mb-3">
+                                                                        <div className="flex items-center space-x-2 bg-gradient-to-r from-orange-100 to-amber-100 px-3 py-1.5 rounded-full border border-orange-200">
+                                                                            <FaFire className="text-orange-500" />
+                                                                            <span className="text-sm font-black text-orange-700">
+                                                                                {
+                                                                                    food.calories
+                                                                                }{" "}
+                                                                                calories
                                                                             </span>
+                                                                        </div>
+                                                                        {isAlreadySelected &&
+                                                                            !isSelectedForCurrentDay && (
+                                                                                <div className="flex items-center space-x-2 bg-red-100 border border-red-200 px-3 py-1.5 rounded-full">
+                                                                                    <span className="text-xs font-black text-red-700 flex items-center">
+                                                                                        🔴
+                                                                                        Already
+                                                                                        Selected
+                                                                                    </span>
+                                                                                </div>
+                                                                            )}
+                                                                    </div>
+                                                                    {!food.isAvailable && (
+                                                                        <div className="flex items-center space-x-2 mt-3">
+                                                                            <div className="bg-red-100 border border-red-200 px-3 py-1.5 rounded-full">
+                                                                                <span className="text-xs font-black text-red-700 flex items-center">
+                                                                                    🔴
+                                                                                    Currently
+                                                                                    Unavailable
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                                {isSelectedForCurrentDay && (
+                                                                    <div className="flex-shrink-0">
+                                                                        <div className="bg-gradient-to-r from-teal-500 to-emerald-600 text-white p-3 rounded-full shadow-lg">
+                                                                            <FaCheck className="text-lg" />
                                                                         </div>
                                                                     </div>
                                                                 )}
                                                             </div>
-                                                            {selectedMeals[
-                                                                selectedDay
-                                                            ]?.[mealType]
-                                                                ?.id ===
-                                                                food.id && (
-                                                                <div className="flex-shrink-0">
-                                                                    <div className="bg-gradient-to-r from-teal-500 to-emerald-600 text-white p-3 rounded-full shadow-lg">
-                                                                        <FaCheck className="text-lg" />
-                                                                    </div>
-                                                                </div>
-                                                            )}
                                                         </div>
-                                                    </div>
-                                                ))}
+                                                    );
+                                                })}
                                             </div>
                                         </div>
                                     ))}
@@ -650,14 +813,30 @@ const UserFoodMenu = () => {
 
                         <button
                             onClick={handleSubmitSelections}
-                            disabled={calculateTotalCalories(selectedDay) === 0}
+                            disabled={
+                                calculateTotalCalories(selectedDay) === 0 ||
+                                saveSelectionsMutation.isLoading ||
+                                !hasChanges()
+                            }
                             className="w-full bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed text-white font-black text-lg py-5 px-8 rounded-2xl transition-all duration-500 transform hover:scale-105 disabled:hover:scale-100 shadow-2xl hover:shadow-3xl disabled:shadow-none relative overflow-hidden cursor-pointer group"
                         >
                             <span className="relative z-10 flex items-center justify-center space-x-3">
-                                <FaCheck className="text-xl" />
-                                <span>
-                                    Confirm Selections for {selectedDay}
-                                </span>
+                                {saveSelectionsMutation.isLoading ? (
+                                    <>
+                                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                        <span>Saving...</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <FaSave className="text-xl" />
+                                        <span>
+                                            {existingSelections.length > 0
+                                                ? "Update"
+                                                : "Save"}{" "}
+                                            Selections for {selectedDay}
+                                        </span>
+                                    </>
+                                )}
                             </span>
                         </button>
                     </div>

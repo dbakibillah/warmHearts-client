@@ -15,6 +15,8 @@ import AuthProvider from "./providers/AuthProviders";
 import Root from "./routes/Root";
 import UserFoodMenu from "./dashboard/member/UserFoodMenu";
 import { ToastContainer } from "react-toastify";
+import DashboardProfile from "./dashboard/member/DashboardProfile";
+import UserMedicine from "./dashboard/member/UserMedicine";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +46,14 @@ createRoot(document.getElementById("root")).render(
                         <Route
                             path="/dashboard/food-menu"
                             element={<UserFoodMenu />}
+                        />
+                        <Route
+                            path="/dashboard/profile"
+                            element={<DashboardProfile />}
+                        />
+                         <Route
+                            path="/dashboard/medicines"
+                            element={<UserMedicine />}
                         />
                     </Route>
                 </Routes>

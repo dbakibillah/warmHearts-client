@@ -6,7 +6,6 @@ import {
     FaChevronLeft,
     FaChevronRight,
     FaCog,
-    FaCreditCard,
     FaDashcube,
     FaHeart,
     FaHome,
@@ -14,7 +13,7 @@ import {
     FaUserMd,
     FaUsers,
     FaUserShield,
-    FaUtensils,
+    FaUtensils
 } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import useUserData from "../../hooks/useUserData";
@@ -52,24 +51,6 @@ const DashboardLeft = () => {
             name: "Medicines",
             path: "/dashboard/medicines",
             icon: <FaPills className="text-xl" />,
-            roles: ["user"],
-        },
-        {
-            name: "Appointments",
-            path: "/dashboard/appointments",
-            icon: <FaCalendarAlt className="text-xl" />,
-            roles: ["user"],
-        },
-        {
-            name: "Subscriptions",
-            path: "/dashboard/subscriptions",
-            icon: <FaCreditCard className="text-xl" />,
-            roles: ["user"],
-        },
-        {
-            name: "Reports",
-            path: "/dashboard/reports",
-            icon: <FaChartBar className="text-xl" />,
             roles: ["user"],
         },
     ];

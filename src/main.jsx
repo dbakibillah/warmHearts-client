@@ -19,6 +19,7 @@ import DashboardProfile from "./dashboard/member/DashboardProfile";
 import UserMedicine from "./dashboard/member/UserMedicine";
 import MyAppointment from "./dashboard/member/MyAppointment";
 import AdminAppointments from "./dashboard/admin/AdminAppointments";
+import UserManagement from "./dashboard/admin/UserManagement";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +65,10 @@ createRoot(document.getElementById("root")).render(
                         <Route
                             path="/dashboard/admin-appointments"
                             element={<AdminAppointments />}
+                        />
+                        <Route
+                            path="/dashboard/user-management"
+                            element={<UserManagement />}
                         />
                     </Route>
                 </Routes>

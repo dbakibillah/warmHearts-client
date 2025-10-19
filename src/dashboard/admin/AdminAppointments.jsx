@@ -34,7 +34,9 @@ const AdminAppointments = () => {
             <div className="flex justify-center items-center min-h-96">
                 <div className="flex flex-col items-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-                    <div className="text-lg text-gray-600">Loading appointments...</div>
+                    <div className="text-lg text-gray-600">
+                        Loading appointments...
+                    </div>
                 </div>
             </div>
         );
@@ -81,7 +83,8 @@ const AdminAppointments = () => {
                         Appointments Management
                     </h1>
                     <p className="text-gray-600 mt-2">
-                        Overview of all scheduled appointments ({appointments.length} total)
+                        Overview of all scheduled appointments (
+                        {appointments.length} total)
                     </p>
                 </div>
 
@@ -93,8 +96,12 @@ const AdminAppointments = () => {
                                 <span className="text-2xl">📋</span>
                             </div>
                             <div className="ml-4">
-                                <p className="text-sm font-medium text-gray-600">Total Appointments</p>
-                                <p className="text-2xl font-bold text-gray-900">{appointments.length}</p>
+                                <p className="text-sm font-medium text-gray-600">
+                                    Total Appointments
+                                </p>
+                                <p className="text-2xl font-bold text-gray-900">
+                                    {appointments.length}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -104,9 +111,17 @@ const AdminAppointments = () => {
                                 <span className="text-2xl">👥</span>
                             </div>
                             <div className="ml-4">
-                                <p className="text-sm font-medium text-gray-600">Unique Patients</p>
+                                <p className="text-sm font-medium text-gray-600">
+                                    Unique Patients
+                                </p>
                                 <p className="text-2xl font-bold text-gray-900">
-                                    {new Set(appointments.map(apt => apt.elderlyName)).size}
+                                    {
+                                        new Set(
+                                            appointments.map(
+                                                (apt) => apt.elderlyName
+                                            )
+                                        ).size
+                                    }
                                 </p>
                             </div>
                         </div>
@@ -117,12 +132,22 @@ const AdminAppointments = () => {
                                 <span className="text-2xl">💰</span>
                             </div>
                             <div className="ml-4">
-                                <p className="text-sm font-medium text-gray-600">Total Revenue</p>
+                                <p className="text-sm font-medium text-gray-600">
+                                    Total Revenue
+                                </p>
                                 <p className="text-2xl font-bold text-gray-900">
-                                    {appointments.reduce((total, apt) => {
-                                        const price = parseInt(apt.price?.replace(/[^0-9]/g, '') || '0');
-                                        return total + price;
-                                    }, 0).toLocaleString()} Taka
+                                    {appointments
+                                        .reduce((total, apt) => {
+                                            const price = parseInt(
+                                                apt.price?.replace(
+                                                    /[^0-9]/g,
+                                                    ""
+                                                ) || "0"
+                                            );
+                                            return total + price;
+                                        }, 0)
+                                        .toLocaleString()}{" "}
+                                    Taka
                                 </p>
                             </div>
                         </div>
@@ -136,7 +161,7 @@ const AdminAppointments = () => {
                             Scheduled Appointments
                         </h2>
                     </div>
-                    
+
                     <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
@@ -192,7 +217,7 @@ const AppointmentRow = ({ appointment, onViewDetails }) => {
                 <div className="flex items-center space-x-4">
                     <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
                         <span className="text-white font-semibold text-sm">
-                            {appointment.elderlyName?.charAt(0) || 'P'}
+                            {appointment.elderlyName?.charAt(0) || "P"}
                         </span>
                     </div>
                     <div>
@@ -243,16 +268,26 @@ const AppointmentRow = ({ appointment, onViewDetails }) => {
             <td className="px-6 py-4">
                 <div className="space-y-1">
                     <div className="text-sm">
-                        <span className="font-medium text-gray-700">Health:</span>
-                        <span className="text-gray-600 ml-1">{truncateText(appointment.healthIssues, 25)}</span>
+                        <span className="font-medium text-gray-700">
+                            Health:
+                        </span>
+                        <span className="text-gray-600 ml-1">
+                            {truncateText(appointment.healthIssues, 25)}
+                        </span>
                     </div>
                     <div className="text-sm">
-                        <span className="font-medium text-gray-700">Medications:</span>
-                        <span className="text-gray-600 ml-1">{truncateText(appointment.medications, 25)}</span>
+                        <span className="font-medium text-gray-700">
+                            Medications:
+                        </span>
+                        <span className="text-gray-600 ml-1">
+                            {truncateText(appointment.medications, 25)}
+                        </span>
                     </div>
                     <div className="text-sm">
                         <span className="font-medium text-gray-700">Diet:</span>
-                        <span className="text-gray-600 ml-1">{appointment.foodPreference}</span>
+                        <span className="text-gray-600 ml-1">
+                            {appointment.foodPreference}
+                        </span>
                     </div>
                 </div>
             </td>
@@ -300,21 +335,42 @@ const AppointmentModal = ({ appointment, onClose }) => {
                                 Patient Information
                             </h4>
                             <div className="space-y-3">
-                                <DetailItem label="Full Name" value={appointment.elderlyName} />
-                                <DetailItem label="Age" value={appointment.age} />
-                                <DetailItem label="Gender" value={appointment.gender} />
-                                <DetailItem label="Guardian" value={appointment.guardianName} />
+                                <DetailItem
+                                    label="Full Name"
+                                    value={appointment.elderlyName}
+                                />
+                                <DetailItem
+                                    label="Age"
+                                    value={appointment.age}
+                                />
+                                <DetailItem
+                                    label="Gender"
+                                    value={appointment.gender}
+                                />
+                                <DetailItem
+                                    label="Guardian"
+                                    value={appointment.guardianName}
+                                />
                             </div>
                         </div>
-                        
+
                         <div>
                             <h4 className="text-lg font-semibold text-gray-900 mb-4">
                                 Contact Information
                             </h4>
                             <div className="space-y-3">
-                                <DetailItem label="Phone" value={appointment.contactNumber} />
-                                <DetailItem label="Email" value={appointment.userEmail} />
-                                <DetailItem label="Address" value={appointment.address} />
+                                <DetailItem
+                                    label="Phone"
+                                    value={appointment.contactNumber}
+                                />
+                                <DetailItem
+                                    label="Email"
+                                    value={appointment.userEmail}
+                                />
+                                <DetailItem
+                                    label="Address"
+                                    value={appointment.address}
+                                />
                             </div>
                         </div>
                     </div>
@@ -325,9 +381,18 @@ const AppointmentModal = ({ appointment, onClose }) => {
                             Health Information
                         </h4>
                         <div className="space-y-3">
-                            <DetailItem label="Health Issues" value={appointment.healthIssues} />
-                            <DetailItem label="Medications" value={appointment.medications} />
-                            <DetailItem label="Food Preference" value={appointment.foodPreference} />
+                            <DetailItem
+                                label="Health Issues"
+                                value={appointment.healthIssues}
+                            />
+                            <DetailItem
+                                label="Medications"
+                                value={appointment.medications}
+                            />
+                            <DetailItem
+                                label="Food Preference"
+                                value={appointment.foodPreference}
+                            />
                         </div>
                     </div>
 
@@ -337,10 +402,22 @@ const AppointmentModal = ({ appointment, onClose }) => {
                             Appointment Details
                         </h4>
                         <div className="space-y-3">
-                            <DetailItem label="Selected Plan" value={appointment.selectedPlan} />
-                            <DetailItem label="Preferred Date" value={formatDate(appointment.preferredDate)} />
-                            <DetailItem label="Preferred Time" value={appointment.preferredTime} />
-                            <DetailItem label="Price" value={appointment.price} />
+                            <DetailItem
+                                label="Selected Plan"
+                                value={appointment.selectedPlan}
+                            />
+                            <DetailItem
+                                label="Preferred Date"
+                                value={formatDate(appointment.preferredDate)}
+                            />
+                            <DetailItem
+                                label="Preferred Time"
+                                value={appointment.preferredTime}
+                            />
+                            <DetailItem
+                                label="Price"
+                                value={appointment.price}
+                            />
                         </div>
                     </div>
                 </div>
@@ -365,7 +442,9 @@ const AppointmentModal = ({ appointment, onClose }) => {
 const DetailItem = ({ label, value }) => (
     <div className="flex justify-between items-start py-2 border-b border-gray-100">
         <span className="font-medium text-gray-700 text-sm">{label}:</span>
-        <span className="text-gray-900 text-sm text-right max-w-xs">{value || "Not specified"}</span>
+        <span className="text-gray-900 text-sm text-right max-w-xs">
+            {value || "Not specified"}
+        </span>
     </div>
 );
 
@@ -378,7 +457,7 @@ const formatDate = (dateString) => {
             year: "numeric",
             month: "long",
             day: "numeric",
-            weekday: "long"
+            weekday: "long",
         });
     } catch (error) {
         return dateString;

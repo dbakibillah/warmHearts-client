@@ -18,6 +18,7 @@ import { ToastContainer } from "react-toastify";
 import DashboardProfile from "./dashboard/member/DashboardProfile";
 import UserMedicine from "./dashboard/member/UserMedicine";
 import MyAppointment from "./dashboard/member/MyAppointment";
+import AdminAppointments from "./dashboard/admin/AdminAppointments";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +60,10 @@ createRoot(document.getElementById("root")).render(
                         <Route
                             path="/dashboard/my-appointments"
                             element={<MyAppointment />}
+                        />
+                        <Route
+                            path="/dashboard/admin-appointments"
+                            element={<AdminAppointments />}
                         />
                     </Route>
                 </Routes>

@@ -13,7 +13,7 @@ import {
     FaUserMd,
     FaUsers,
     FaUserShield,
-    FaUtensils
+    FaUtensils,
 } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import useUserData from "../../hooks/useUserData";
@@ -58,7 +58,7 @@ const DashboardLeft = () => {
             path: "/dashboard/my-appointments",
             icon: <FaCalendarAlt className="text-xl" />,
             roles: ["user"],
-        }
+        },
     ];
 
     const adminMenuItems = [
@@ -69,27 +69,9 @@ const DashboardLeft = () => {
             roles: ["admin"],
         },
         {
-            name: "Inventory",
-            path: "/dashboard/inventory",
-            icon: <FaBox className="text-xl" />,
-            roles: ["admin", "staff"],
-        },
-        {
             name: "Appointments",
-            path: "/dashboard/appointments",
+            path: "/dashboard/admin-appointments",
             icon: <FaCalendarAlt className="text-xl" />,
-            roles: ["admin"],
-        },
-        {
-            name: "Reports",
-            path: "/dashboard/reports",
-            icon: <FaChartBar className="text-xl" />,
-            roles: ["admin"],
-        },
-        {
-            name: "System Settings",
-            path: "/dashboard/system-settings",
-            icon: <FaCog className="text-xl" />,
             roles: ["admin"],
         },
     ];

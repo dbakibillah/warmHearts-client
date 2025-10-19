@@ -16,8 +16,12 @@ import {
 } from "react-icons/fa";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useUserData from "../../../hooks/useUserData";
 
 const AppointmentForm = () => {
+    const axiosSecure = useAxiosSecure();
+    const { currentUser } = useUserData();
     const location = useLocation();
     const navigate = useNavigate();
     const { selectedPlan, price } = location.state || {};
@@ -28,7 +32,7 @@ const AppointmentForm = () => {
         gender: "Male",
         guardianName: "",
         contactNumber: "",
-        email: "",
+        address: "",
         healthIssues: "",
         medications: "",
         foodPreference: "Normal Diet",
@@ -79,7 +83,7 @@ const AppointmentForm = () => {
                 return;
             }
         } else if (currentStep === 2) {
-            if (!formData.contactNumber || !formData.email) {
+            if (!formData.contactNumber || !formData.address) {
                 alert("Please fill in all required contact details");
                 return;
             }
@@ -120,26 +124,23 @@ const AppointmentForm = () => {
         }
 
         setIsSubmitting(true);
-        try {
-            console.log("Form submitted:", {
-                ...formData,
-                selectedPlan,
-                price,
-            });
-            setTimeout(() => {
-                setIsSubmitting(false);
-                navigate("/confirmation", {
-                    state: {
-                        formData: { ...formData, selectedPlan, price },
-                        appointmentId: Math.random().toString(36).substr(2, 9),
-                    },
-                });
-            }, 1500);
-        } catch (error) {
-            console.error("Submission error:", error);
-            alert("There was an error submitting your form. Please try again.");
+
+        const submissionData = {
+            ...formData,
+            selectedPlan,
+            price,
+            userEmail: currentUser?.email || "",
+        };
+        await axiosSecure.post("/appointments", submissionData);
+        setTimeout(() => {
             setIsSubmitting(false);
-        }
+            navigate("/dashboard/my-appointments", {
+                state: {
+                    formData: { ...formData, selectedPlan, price },
+                    appointmentId: Math.random().toString(36).substr(2, 9),
+                },
+            });
+        }, 1500);
     };
 
     return (
@@ -236,10 +237,7 @@ const AppointmentForm = () => {
                     >
                         {currentStep === 1 && (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <motion.div
-                                    className="col-span-2"
-                                    variants={itemVariants}
-                                >
+                                <motion.div variants={itemVariants}>
                                     <label className="flex items-center text-gray-700 font-semibold mb-2">
                                         <span className="inline-flex items-center justify-center w-8 h-8 bg-indigo-100 rounded-full mr-3">
                                             <FaUser className="text-indigo-600" />
@@ -326,24 +324,21 @@ const AppointmentForm = () => {
                                     />
                                 </motion.div>
 
-                                <motion.div
-                                    className="col-span-2"
-                                    variants={itemVariants}
-                                >
+                                <motion.div variants={itemVariants}>
                                     <label className="flex items-center text-gray-700 font-semibold mb-2">
                                         <span className="inline-flex items-center justify-center w-8 h-8 bg-purple-100 rounded-full mr-3">
                                             <FaEnvelope className="text-purple-600" />
                                         </span>
-                                        Email
+                                        Address
                                     </label>
                                     <input
-                                        type="email"
-                                        name="email"
-                                        value={formData.email}
+                                        type="text"
+                                        name="address"
+                                        value={formData.address}
                                         onChange={handleInputChange}
                                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-100 outline-none transition-all duration-200 shadow-sm"
                                         required
-                                        placeholder="email@example.com"
+                                        placeholder="123 Main St, Anytown, BD"
                                     />
                                 </motion.div>
                             </div>

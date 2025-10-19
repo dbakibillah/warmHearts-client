@@ -53,6 +53,12 @@ const DashboardLeft = () => {
             icon: <FaPills className="text-xl" />,
             roles: ["user"],
         },
+        {
+            name: "My Appointments",
+            path: "/dashboard/my-appointments",
+            icon: <FaCalendarAlt className="text-xl" />,
+            roles: ["user"],
+        }
     ];
 
     const adminMenuItems = [
